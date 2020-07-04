@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "759379358582",
+    "firebase_url": "https://depressionsafetytracking.firebaseio.com",
+    "project_id": "depressionsafetytracking",
+    "storage_bucket": "depressionsafetytracking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:759379358582:android:24727fcefaac02975c8057",
+        "android_client_info": {
+          "package_name": "com.dnpa.finalproject.depressionsafetytracking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "759379358582-cehklf4qjmlq9dl9b5qu4uukr2874ig9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dnpa.finalproject.depressionsafetytracking",
+            "certificate_hash": "d3e3eac1e131818b0e2256efd9f41f6532a46bf9"
+          }
+        },
+        {
+          "client_id": "759379358582-98jvkthr7c8p475u6vbepn841l0n6q9f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANe3L0thGmwiukIkvibVLM3JKMj3F_QOg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "759379358582-98jvkthr7c8p475u6vbepn841l0n6q9f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
