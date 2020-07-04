@@ -8,9 +8,11 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -42,6 +44,18 @@ public class GetLocation extends AppCompatActivity implements View.OnClickListen
 
         goMap = findViewById(R.id.button1);
         goMap.setOnClickListener(this);
+
+        new CountDownTimer(5000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                Log.e("seconds remaining: ",""+ millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                Toast.makeText(GetLocation.this,"Puntos actualizados.", Toast.LENGTH_SHORT).show();
+                uploadLastLocation();
+            }
+        }.start();
     }
 
     //falta pedir permisos a la aplicacion o dispositivo
@@ -84,4 +98,6 @@ public class GetLocation extends AppCompatActivity implements View.OnClickListen
                 break;
         }
     }
+
+
 }

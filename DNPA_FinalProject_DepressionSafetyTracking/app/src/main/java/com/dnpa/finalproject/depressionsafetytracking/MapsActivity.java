@@ -1,5 +1,6 @@
 package com.dnpa.finalproject.depressionsafetytracking;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
@@ -9,11 +10,25 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+
+    //referenciaa BD
+    private DatabaseReference mDatabase;
+
+    private ArrayList<Marker> tmpRealTimeMarkers = new ArrayList<>();
+    private ArrayList<Marker> realTimeMarkers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +38,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
 
@@ -39,9 +56,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //direeccionar a la bd
+        //cada vez que cambien los valores poner puntos en el mapa
+        mDatabase.child("usuarios").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(Marker marker:realTimeMarkers){
+                    marker.remove();
+                }
+
+                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    MapsPojo mp = snapshot.getValue(MapsPojo.class);
+                    Double latitud = mp.getLatitud();
+                    Double longitud = mp.getLongitud();
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    markerOptions.position(new LatLng(latitud,longitud));
+
+                    //solo obtener los actuales o no se
+                    tmpRealTimeMarkers.add(mMap.addMarker(markerOptions));
+                }
+
+                realTimeMarkers.clear();
+                realTimeMarkers.addAll(tmpRealTimeMarkers);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 }
