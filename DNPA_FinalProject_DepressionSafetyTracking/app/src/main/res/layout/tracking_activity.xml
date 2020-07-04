@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TrackingView"
+    tools:context=".DetermineOrientationActivity"
     android:orientation="vertical">
 
     <TextView
@@ -27,7 +27,6 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:text="Stop Tracking" />
 
     <Button
@@ -35,5 +34,69 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Button" />
+
+    <RadioGroup android:id="@+id/sensorSelector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" >
+
+        <RadioButton android:id="@+id/accelerometerMagnetometer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Accelerometer &amp; Magnetometer"
+            android:checked="true"
+            android:onClick="onSensorSelectorClick" />
+    </RadioGroup>
+
+    <TextView android:id="@+id/selectedSensorLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selected Sensor:"
+        android:layout_below="@id/sensorSelector"
+        android:layout_marginRight="5dip" />
+
+    <TextView android:id="@+id/selectedSensorValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/selectedSensorLabel"
+        android:layout_alignTop="@id/selectedSensorLabel"
+        android:layout_alignBottom="@id/selectedSensorLabel" />
+
+    <TextView android:id="@+id/orientationLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Orientacion"/>
+
+    <TextView android:id="@+id/orientationValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/sensorXLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Valor X "/>
+
+    <TextView android:id="@+id/sensorXValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView android:id="@+id/sensorYLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Valor Y "/>
+
+    <TextView android:id="@+id/sensorYValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView android:id="@+id/sensorZLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Valor Z "/>
+
+    <TextView android:id="@+id/sensorZValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
