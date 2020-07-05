@@ -42,12 +42,16 @@
             android:name=".Location.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
 
-        <!-- Main View -->
+        <!-- Main View
         <activity
-            android:name=".Location.GetLocation"></activity>
+            android:name=".Location.GetLocation"></activity> -->
+
+        <!-- Movement View -->
+        <activity
+            android:name=".Movement.DetermineMovementActivity"></activity>
 
         <!-- SplashScreen -->
-        <activity   android:name=".Movement.DetermineMovementActivity"
+        <activity   android:name=".Microphone.UsingMicrophone"
                     android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

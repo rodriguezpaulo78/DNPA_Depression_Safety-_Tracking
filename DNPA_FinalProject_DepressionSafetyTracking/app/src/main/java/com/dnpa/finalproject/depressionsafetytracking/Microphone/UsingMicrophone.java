@@ -36,11 +36,20 @@ public class UsingMicrophone extends AppCompatActivity implements SensorEventLis
     // Initializes the MediaRecorder as mRecorder for volume tracking
     private MediaRecorder mRecorder = null;
     // Creates list of maximum amplitude values collected
-// Would be used to send data to server
+    // Would be used to send data to server
     public static List<String> MaxValue = new ArrayList();
     // Initializes the SensorManager and Sensor for motion sensing
     private SensorManager mSensorManager;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.tracking_activity);
+        //initializeViews();
+        // Starts linear accelerometer
+        mSensorManager = (SensorManager)
+                getSystemService(Context.SENSOR_SERVICE);
+    }
 
     // Start recording function
     protected void onRestart() {
@@ -119,15 +128,8 @@ public class UsingMicrophone extends AppCompatActivity implements SensorEventLis
         Log.e(LOG_TAG, "Motion Pause Called");
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.tracking_activity);
-        //initializeViews();
-        // Starts linear accelerometer
-        mSensorManager = (SensorManager)
-                getSystemService(Context.SENSOR_SERVICE);
-    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -136,17 +138,18 @@ public class UsingMicrophone extends AppCompatActivity implements SensorEventLis
         final Button button = (Button) findViewById(R.id.button1);
         button.setOnClickListener(new View.OnClickListener() {
 
-                                      @Override public void onClick (View view){
-                                          // Calls start recording function on Start button (button) push
-                                          onRestart();
-                                          // Calls start linear accelerometer function on Start button (button) push
-                                          onResume();
-                                          // Notifies the user tracking has begun
-                                          Toast.makeText(UsingMicrophone.this, "Tracking",
-                                                  Toast.LENGTH_SHORT).show();
-                                      }
-                                  }
+            @Override public void onClick (View view){
+                // Calls start recording function on Start button (button) push
+                onRestart();
+                // Calls start linear accelerometer function on Start button (button) push
+                onResume();
+                // Notifies the user tracking has begun
+                Toast.makeText(UsingMicrophone.this, "Tracking",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
         );
+
         // Reaction to Stop button (button2) pushed
         Button button2 = (Button) findViewById(R.id.button2);
         button2.setOnClickListener(new View.OnClickListener() {
@@ -163,6 +166,7 @@ public class UsingMicrophone extends AppCompatActivity implements SensorEventLis
         });
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -181,7 +185,6 @@ public class UsingMicrophone extends AppCompatActivity implements SensorEventLis
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-
         // Constantly calls getAmplitude function
         double amp = getAmplitude();
         //String max = String.valueOf(amp);
@@ -189,6 +192,7 @@ public class UsingMicrophone extends AppCompatActivity implements SensorEventLis
         // Shows constant stream of maximum amplitude values in logcat
         Log.e(LOG_TAG, "Max Amplitude " +amp);
     }
+
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }

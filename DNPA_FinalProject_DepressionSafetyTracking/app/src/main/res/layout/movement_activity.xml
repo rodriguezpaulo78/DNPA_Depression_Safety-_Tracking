@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <RadioGroup android:id="@+id/sensorSelector" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible">
+        
+        <RadioButton android:id="@+id/accelerometer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Acelerometro"
+            android:checked="true"
+            android:onClick="onSensorSelectorClick" />
+
+    </RadioGroup>
+    
+    <ToggleButton android:id="@+id/readAccelerationDataToggleButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:layout_alignParentBottom="true"
+        android:textOn="Leyendo Datos del Acelerometro"
+        android:textOff="Empezar Lectura de Datos de Aceleracion"
+        android:onClick="onReadAccelerationDataToggleButtonClicked" />
+    
+    <com.androidplot.xy.XYPlot android:id="@+id/XYPlot"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        title="Acceleration Plot"
+        android:layout_below="@id/sensorSelector"
+        android:layout_above="@id/readAccelerationDataToggleButton"/>
+
+</RelativeLayout>
