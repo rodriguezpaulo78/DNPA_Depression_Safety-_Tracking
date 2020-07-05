@@ -1,10 +1,11 @@
-package com.dnpa.finalproject.depressionsafetytracking;
+package com.dnpa.finalproject.depressionsafetytracking.Location;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
 
+import com.dnpa.finalproject.depressionsafetytracking.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;

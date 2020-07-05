@@ -1,4 +1,4 @@
-package com.dnpa.finalproject.depressionsafetytracking;
+package com.dnpa.finalproject.depressionsafetytracking.Location;
 
 public class MapsPojo {
 

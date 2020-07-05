@@ -1,4 +1,4 @@
-package com.dnpa.finalproject.depressionsafetytracking;
+package com.dnpa.finalproject.depressionsafetytracking.Location;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -14,10 +14,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.dnpa.finalproject.depressionsafetytracking.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.FirebaseAppLifecycleListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

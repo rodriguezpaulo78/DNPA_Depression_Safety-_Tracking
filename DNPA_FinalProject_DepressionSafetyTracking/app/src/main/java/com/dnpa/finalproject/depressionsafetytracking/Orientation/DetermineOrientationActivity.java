@@ -1,4 +1,4 @@
-package com.dnpa.finalproject.depressionsafetytracking;
+package com.dnpa.finalproject.depressionsafetytracking.Orientation;
 
 import android.annotation.SuppressLint;
 import android.hardware.Sensor;
@@ -15,6 +15,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.dnpa.finalproject.depressionsafetytracking.R;
 
 /**
  * Determines whether the device is face up or face down and gives a audio
