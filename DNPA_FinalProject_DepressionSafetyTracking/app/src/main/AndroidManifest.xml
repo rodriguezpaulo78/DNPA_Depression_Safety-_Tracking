@@ -10,10 +10,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-    <permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--Gives permission to write storage-->
+    <permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <!--Gives permission to record audio-->
     <permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -41,7 +41,14 @@
         <activity
             android:name=".Location.MapsActivity"
             android:label="@string/title_activity_maps"></activity>
-        <activity android:name=".Microphone.UsingMicrophone">
+
+        <!-- Main View -->
+        <activity
+            android:name=".Location.GetLocation"></activity>
+
+        <!-- SplashScreen -->
+        <activity   android:name=".Movement.DetermineMovementActivity"
+                    android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

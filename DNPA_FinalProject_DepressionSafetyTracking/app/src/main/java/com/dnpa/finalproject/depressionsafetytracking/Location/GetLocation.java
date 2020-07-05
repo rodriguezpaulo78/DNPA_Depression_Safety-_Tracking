@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.dnpa.finalproject.depressionsafetytracking.Movement.DetermineMovementActivity;
 import com.dnpa.finalproject.depressionsafetytracking.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -29,6 +30,7 @@ public class GetLocation extends AppCompatActivity implements View.OnClickListen
     private FusedLocationProviderClient fusedLocationClient;
     DatabaseReference mDatabase;
     private Button goMap;
+    private Button btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,19 +40,17 @@ public class GetLocation extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.tracking_activity);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
-
         uploadLastLocation();
 
-        goMap = findViewById(R.id.button1);
+        goMap = findViewById(R.id.button3);
+        btn = findViewById(R.id.button4);
         goMap.setOnClickListener(this);
+        btn.setOnClickListener(this);
 
         new CountDownTimer(5000, 1000) {
-
             public void onTick(long millisUntilFinished) {
                 Log.e("seconds remaining: ",""+ millisUntilFinished / 1000);
             }
-
             public void onFinish() {
                 Toast.makeText(GetLocation.this,"Puntos actualizados.", Toast.LENGTH_SHORT).show();
                 uploadLastLocation();
@@ -92,9 +92,13 @@ public class GetLocation extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.button1 :
+            case R.id.button3 :
                 Intent intent = new Intent(GetLocation.this,MapsActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.button4 :
+                Intent intent2 = new Intent(GetLocation.this, DetermineMovementActivity.class);
+                startActivity(intent2);
                 break;
         }
     }

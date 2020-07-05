@@ -8,10 +8,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Application  text theme. -->
     <style name="apptext">
         <item name="android:textSize">12sp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!-- Application NoActionBartext theme. -->
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
 </resources>

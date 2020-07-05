@@ -22,7 +22,6 @@ import com.dnpa.finalproject.depressionsafetytracking.R;
  * Determines whether the device is face up or face down and gives a audio
  * notification (via TTS) when the face-up/face-down orientation changes.
  *
- * @author Adam Stroud &#60;<a href="mailto:adam.stroud@gmail.com">adam.stroud@gmail.com</a>&#62;
  */
 public class DetermineOrientationActivity extends AppCompatActivity implements SensorEventListener {
     private static final String TAG = "DetermineOrientationActivity";
@@ -32,8 +31,6 @@ public class DetermineOrientationActivity extends AppCompatActivity implements S
     private float[] accelerationValues;
     private float[] magneticValues;
     private boolean isFaceUp;
-    private RadioGroup sensorSelector;
-    private TextView selectedSensorValue;
     private TextView orientationValue;
     private TextView sensorXLabel;
     private TextView sensorXValue;
@@ -41,24 +38,18 @@ public class DetermineOrientationActivity extends AppCompatActivity implements S
     private TextView sensorYValue;
     private TextView sensorZLabel;
     private TextView sensorZValue;
-    private int selectedSensorId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.tracking_activity);
 
-        // Keep the screen on so that changes in orientation can be easily
-        // observed
+        // Keep the screen on so that changes in orientation can be easily observed
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         // Get a reference to the sensor service
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
-        // Initialize references to the UI views that will be updated in the
-        // code
-        sensorSelector = (RadioGroup) findViewById(R.id.sensorSelector);
-        selectedSensorValue = (TextView) findViewById(R.id.selectedSensorValue);
         orientationValue = (TextView) findViewById(R.id.orientationValue);
         sensorXLabel = (TextView) findViewById(R.id.sensorXLabel);
         sensorXValue = (TextView) findViewById(R.id.sensorXValue);
@@ -90,10 +81,8 @@ public class DetermineOrientationActivity extends AppCompatActivity implements S
             case Sensor.TYPE_GRAVITY:
                 sensorXLabel.setText("X Axis:");
                 sensorXValue.setText(String.valueOf(event.values[0]));
-
                 sensorYLabel.setText("Y Axis:");
                 sensorYValue.setText(String.valueOf(event.values[1]));
-
                 sensorZLabel.setText("Z Axis:");
                 sensorZValue.setText(String.valueOf(event.values[2]));
 
@@ -101,24 +90,24 @@ public class DetermineOrientationActivity extends AppCompatActivity implements S
                 sensorYValue.setVisibility(View.VISIBLE);
                 sensorZLabel.setVisibility(View.VISIBLE);
                 sensorZValue.setVisibility(View.VISIBLE);
-
                 break;
+
             case Sensor.TYPE_ACCELEROMETER:
                 accelerationValues = event.values.clone();
                 rotationMatrix = generateRotationMatrix();
-
                 if (rotationMatrix != null) {
                     determineOrientation(rotationMatrix);
                 }
                 break;
+
             case Sensor.TYPE_MAGNETIC_FIELD:
                 magneticValues = event.values.clone();
                 rotationMatrix = generateRotationMatrix();
-
                 if (rotationMatrix != null) {
                     determineOrientation(rotationMatrix);
                 }
                 break;
+
             case Sensor.TYPE_ROTATION_VECTOR:
                 rotationMatrix = new float[16];
                 SensorManager.getRotationMatrixFromVector(rotationMatrix,
@@ -131,9 +120,7 @@ public class DetermineOrientationActivity extends AppCompatActivity implements S
     @SuppressLint("LongLogTag")
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        Log.d(TAG,
-                String.format("Accuracy for sensor %s = %d",
-                        sensor.getName(), accuracy));
+        Log.d(TAG, String.format("Accuracy for sensor %s = %d", sensor.getName(), accuracy));
     }
 
     /**
@@ -149,9 +136,7 @@ public class DetermineOrientationActivity extends AppCompatActivity implements S
             boolean rotationMatrixGenerated;
             rotationMatrixGenerated =
                     SensorManager.getRotationMatrix(rotationMatrix,
-                            null,
-                            accelerationValues,
-                            magneticValues);
+                            null, accelerationValues, magneticValues);
             if (!rotationMatrixGenerated) {
                 Log.w(TAG, "Failed to generate rotation matrix");
                 rotationMatrix = null;
@@ -164,8 +149,7 @@ public class DetermineOrientationActivity extends AppCompatActivity implements S
      * Uses the last read accelerometer and gravity values to determine if the
      * device is face up or face down.
      *
-     * @param rotationMatrix The rotation matrix to use if the orientation
-     *                       calculation
+     * @param rotationMatrix The rotation matrix to use if the orientation calculation
      */
     @SuppressLint("LongLogTag")
     private void determineOrientation(float[] rotationMatrix) {
@@ -203,20 +187,6 @@ public class DetermineOrientationActivity extends AppCompatActivity implements S
                 onFaceUp();
             }
         }
-
-        //Para ver si esta en la mesa
-        if (pitch >= -1 && pitch <= 1) {
-            if (roll >= -1 && roll <= 1) {
-                Log.d(TAG, "EL DISPOSITIVO ESTÁ SOBRE LA MESA");
-
-            }
-        }
-
-        //Para ver si esta en el bolsillo
-        if (pitch >= -80 && pitch <= -60) {
-            Log.d(TAG, "EL DISPOSITIVO ESTÁ EN EL BOLSILLO DE UNA PERSONA QUE SE ENCUENTRA DE PIE");
-
-        }
     }
 
     /**
@@ -245,37 +215,10 @@ public class DetermineOrientationActivity extends AppCompatActivity implements S
     private void updateSelectedSensor() {
         // Clear any current registrations
         sensorManager.unregisterListener(this);
-
-        // Determine which radio button is currently selected and enable the
-        // appropriate sensors
-        selectedSensorId = sensorSelector.getCheckedRadioButtonId();
-        if (selectedSensorId == R.id.accelerometerMagnetometer) {
-            sensorManager.registerListener(this,
-                    sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                    RATE);
-
-            sensorManager.registerListener(this,
-                    sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
-                    RATE);
-        } else {
-            sensorManager.registerListener(this,
-                    sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR),
-                    RATE);
-        }
-
-        // Update the label with the currently selected sensor
-        RadioButton selectedSensorRadioButton =
-                (RadioButton) findViewById(selectedSensorId);
-        selectedSensorValue.setText(selectedSensorRadioButton.getText());
-    }
-
-    /**
-     * Handles click event for the sensor selector.
-     *
-     * @param view The view that was clicked
-     */
-    public void onSensorSelectorClick(View view) {
-        updateSelectedSensor();
+        sensorManager.registerListener(this,
+                sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), RATE);
+        sensorManager.registerListener(this,
+                sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), RATE);
     }
 }
 
