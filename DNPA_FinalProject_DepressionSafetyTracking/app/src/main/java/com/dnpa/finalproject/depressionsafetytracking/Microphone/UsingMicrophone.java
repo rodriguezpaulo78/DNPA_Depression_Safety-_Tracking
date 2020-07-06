@@ -129,7 +129,6 @@ public class UsingMicrophone extends AppCompatActivity implements SensorEventLis
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -185,10 +184,11 @@ public class UsingMicrophone extends AppCompatActivity implements SensorEventLis
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        Log.e(LOG_TAG, "POR LA PTMR ON SENSOR CHANGED  ");
         // Constantly calls getAmplitude function
         double amp = getAmplitude();
-        //String max = String.valueOf(amp);
-        //MaxValue.add(max);
+        String max = String.valueOf(amp);
+        MaxValue.add(max);
         // Shows constant stream of maximum amplitude values in logcat
         Log.e(LOG_TAG, "Max Amplitude " +amp);
     }

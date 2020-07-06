@@ -16,4 +16,3 @@ Los sensores utilizados en este proyecto fueron:
 2) Detección de Orientación: Acelerómetro y Magnetómetro
 3) Detección de Movimiento: Acelerómetro 
 4) Lectura de Datos: Micrófono
-(*) La implementación de esta solución se realizó a partir de los conocimientos obtenidos del curso

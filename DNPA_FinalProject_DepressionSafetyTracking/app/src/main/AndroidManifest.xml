@@ -51,7 +51,7 @@
             android:name=".Movement.DetermineMovementActivity"></activity>
 
         <!-- SplashScreen -->
-        <activity   android:name=".Microphone.UsingMicrophone"
+        <activity   android:name=".Location.GetLocation"
                     android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
