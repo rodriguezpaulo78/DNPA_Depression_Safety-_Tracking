@@ -2,15 +2,18 @@ package com.dnpa.finalproject.depressionsafetytracking.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -37,6 +40,7 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
     private FusedLocationProviderClient fusedLocationClient;
     LocationReceiver receiver;
     IntentFilter intentFilter;
+    AlertDialog alert = null;
 
     //ORIENTATION HANDLING
     private TextView orientationValue;
@@ -87,18 +91,6 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
 
     }
 
-    //¿Se tienen los permisos?
-    public static boolean hasPermissions(Context context, String... permissions) {
-        if (context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -125,16 +117,33 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
         orientationValue.setText(orientation);
     }
 
+    //Revisa que GPS este activado en el dispositivo para que lea correctamente datos
+    private boolean checkIfLocationOpened() {
+        String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+        Log.e("", "Provider contains=> "+provider);
+        if (provider.contains("gps") || provider.contains("network")){
+            return true;
+        }
+        return false;
+    }
+
     //Llama a los métodos del presentador para iniciar monitoreo
     public void startTracking(View view) {
         ToggleButton toggleButton = (ToggleButton)view;
-        if (toggleButton.isChecked()) {
-            presenter.startReadingData();
-            presenter.updateSelectedSensor(sensorManager);
-            presenter.uploadLastLocation(this, fusedLocationClient);
-        } else {
-            presenter.stopReadingData();
-            presenter.stopSelectedSensor(sensorManager);
+
+        if (checkIfLocationOpened()){
+            if (toggleButton.isChecked()) {
+                presenter.startReadingData();
+                presenter.updateSelectedSensor(sensorManager);
+                presenter.uploadLastLocation(this, fusedLocationClient);
+            } else {
+                presenter.stopReadingData();
+                presenter.stopSelectedSensor(sensorManager);
+            }
+        }else{
+            Log.e("", "LLAMANDO METODO PARA ACTIVAR GPS ");
+            alertNoGps();
+
         }
     }
 
@@ -154,5 +163,36 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
                 startActivity(movementIntent);
                 break;
         }
+    }
+
+    //¿Se tienen los permisos?
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    //Alerta por si el GPS no esta activado
+    private void alertNoGps() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("El sistema GPS esta desactivado, ¿Desea activarlo para realizar el monitoreo?")
+                .setCancelable(false)
+                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        dialog.cancel();
+                    }
+                });
+        alert = builder.create();
+        alert.show();
     }
 }
