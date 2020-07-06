@@ -149,6 +149,7 @@ public class UsingMicrophone extends AppCompatActivity implements SensorEventLis
         }
         );
 
+        /*
         // Reaction to Stop button (button2) pushed
         Button button2 = (Button) findViewById(R.id.button2);
         button2.setOnClickListener(new View.OnClickListener() {
@@ -163,6 +164,8 @@ public class UsingMicrophone extends AppCompatActivity implements SensorEventLis
                         Toast.LENGTH_SHORT).show();
             }
         });
+
+         */
         return true;
     }
 

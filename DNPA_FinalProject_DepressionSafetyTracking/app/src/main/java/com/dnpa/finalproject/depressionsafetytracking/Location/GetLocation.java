@@ -75,7 +75,7 @@ public class GetLocation extends AppCompatActivity implements View.OnClickListen
 
         ////_----
         btn1 = findViewById(R.id.button1);
-        btn2 = findViewById(R.id.button2);
+
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
         ////_----
@@ -134,15 +134,7 @@ public class GetLocation extends AppCompatActivity implements View.OnClickListen
                 Toast.makeText(GetLocation.this, "Tracking",
                         Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.button2 :
-                // Calls stop recording function on Stop button(button2) push
-                onStop();
-                // Calls stop linear accelerometer function on Stop button (button2) push
-                onPause();
-                // Notifies the user tracking has stopped
-                Toast.makeText(GetLocation.this, "Tracking Stopped",
-                        Toast.LENGTH_SHORT).show();
-                break;
+
             case R.id.button3 :
                 Intent intent = new Intent(GetLocation.this,MapsActivity.class);
                 startActivity(intent);

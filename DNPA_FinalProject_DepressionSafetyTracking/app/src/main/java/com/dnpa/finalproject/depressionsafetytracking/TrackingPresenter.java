@@ -2,6 +2,10 @@ package com.dnpa.finalproject.depressionsafetytracking;
 
 import android.hardware.SensorManager;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+
 public class TrackingPresenter implements ITrackingPresenter {
 
     private ITrackingView view;
@@ -45,6 +49,13 @@ public class TrackingPresenter implements ITrackingPresenter {
     public void stopSelectedSensor(SensorManager sensorManager) {
         if(view!=null) {
             model.stopSelectedSensor(sensorManager);
+        }
+    }
+
+    @Override
+    public void uploadLastLocation(AppCompatActivity act, FusedLocationProviderClient fusedLocationClient) {
+        if(view!=null) {
+            model.uploadLastLocation(act, fusedLocationClient);
         }
     }
 }

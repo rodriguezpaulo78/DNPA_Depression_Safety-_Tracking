@@ -1,23 +1,39 @@
 package com.dnpa.finalproject.depressionsafetytracking;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Location;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
 import com.dnpa.finalproject.depressionsafetytracking.Location.GetLocation;
 import com.dnpa.finalproject.depressionsafetytracking.Location.MapsActivity;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static android.content.Context.SENSOR_SERVICE;
 
 public class TrackingModel implements ITrackingModel, SensorEventListener {
 
     private ITrackingPresenter presenter;
+
+    DatabaseReference mDatabase;
+
 
     private static final String TAG = "DetermineOrientationActivity";
     private static final int RATE = SensorManager.SENSOR_DELAY_NORMAL;
@@ -191,5 +207,26 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
         sensorManager.unregisterListener(this);
         presenter.showData("","","","");
     }
+
+    @Override
+    public void uploadLastLocation(AppCompatActivity act, FusedLocationProviderClient fusedLocationClient) {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(act, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            // Logic to handle location object
+                            Log.e("Latitud:"+location.getLatitude(), "Longitud"+location.getLongitude());
+                            Map<String,Object> latlong = new HashMap<>();
+                            latlong.put("latitud", location.getLatitude());
+                            latlong.put("longitud", location.getLongitude());
+                            mDatabase.child("usuarios").push().setValue(latlong);
+                        }
+                    }
+                });
+    }
+
 
 }
