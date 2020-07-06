@@ -6,10 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 
+//Interfaz del Presentador
 public interface ITrackingPresenter {
 
-    //ORIENTATION
-    void showData(String x, String y, String z, String orientation);
+    void showData(String x, String y, String z, String orientation);    //Muestra los datos obtenidos del modelo
     void startReadingData();
     void stopReadingData();
     void updateSelectedSensor(SensorManager sensorManager);

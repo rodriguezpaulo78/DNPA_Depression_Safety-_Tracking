@@ -23,6 +23,7 @@ public class TrackingPresenter implements ITrackingPresenter {
     @Override
     public void showData(String x, String y, String z, String orientation) {
         if(view!=null){
+            //Muestra los datos recibidos en la vista
             view.showData( x,  y,  z,  orientation);
         }
     }
@@ -30,6 +31,7 @@ public class TrackingPresenter implements ITrackingPresenter {
     @Override
     public void startReadingData() {
         if(view!=null){
+            //Llama al método desarrollado en el modelo
             model.startReadingData();
         }
     }
@@ -37,6 +39,7 @@ public class TrackingPresenter implements ITrackingPresenter {
     @Override
     public void stopReadingData() {
         if(view!=null){
+            //Llama al método desarrollado en el modelo
             model.stopReadingData();
         }
     }
@@ -44,6 +47,7 @@ public class TrackingPresenter implements ITrackingPresenter {
     @Override
     public void updateSelectedSensor(SensorManager sensorManager) {
         if(view!=null) {
+            //Llama al método desarrollado en el modelo
             model.updateSelectedSensor(sensorManager);
         }
     }
@@ -51,6 +55,7 @@ public class TrackingPresenter implements ITrackingPresenter {
     @Override
     public void stopSelectedSensor(SensorManager sensorManager) {
         if(view!=null) {
+            //Llama al método desarrollado en el modelo
             model.stopSelectedSensor(sensorManager);
         }
     }
@@ -58,6 +63,7 @@ public class TrackingPresenter implements ITrackingPresenter {
     @Override
     public void uploadLastLocation(AppCompatActivity act, FusedLocationProviderClient fusedLocationClient) {
         if(view!=null) {
+            //Llama al método desarrollado en el modelo
             model.uploadLastLocation(act, fusedLocationClient);
         }
     }

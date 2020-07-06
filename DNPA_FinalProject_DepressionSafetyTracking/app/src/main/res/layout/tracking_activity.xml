@@ -29,7 +29,7 @@
             android:layout_marginStart="5sp"
             android:layout_marginTop="5sp"
             android:textAlignment="center"
-            android:text="Inicia el monitoreo para empezar..."
+            android:text="Presiona el botón para iniciar el monitoreo..."
             android:textSize="28dp"
             android:textStyle="italic" />
 
@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Start/STOP Tracking"
+        android:text="Start/Stop Tracking"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -53,7 +53,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ToggleButton
-        android:id="@+id/button1"
+        android:id="@+id/trackingButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -129,13 +129,13 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/lastLocationsButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="VER REGISTRO UBICACIONES" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/movementButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="VER MONITOREO MOVIMIENTO" />

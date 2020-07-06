@@ -39,11 +39,9 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Receives accelerometer events and writes them to CSV files and plots them on a graph.
- */
-public class AccelerationEventListener implements SensorEventListener
-{
+//Esta clase se encarga del manejo de la lectura de datos (del acelerometro) por parte del usuario
+// separada de la lógica principal de monitoreo de movimiento
+public class AccelerationEventListener implements SensorEventListener {
     private static final String TAG = "AccelerationEventListener";
     private static final float ALPHA = 0.8f;
     private static final int HIGH_PASS_MINIMUM = 10;
@@ -61,7 +59,7 @@ public class AccelerationEventListener implements SensorEventListener
     private long lastChartRefresh;
     private boolean useHighPassFilter;
 
-
+    //BD Firebase
     DatabaseReference mDatabase;
     Map<String,Object> dbValues = new HashMap<>();
 
@@ -100,18 +98,18 @@ public class AccelerationEventListener implements SensorEventListener
         float[] values = event.values.clone();
         Log.d(TAG, "Valores = (" + values[0] + ", " + values[1] + ", " +values[2] +")");
 
+        //Escribe los valores obtenidos en la BD
         mDatabase = FirebaseDatabase.getInstance().getReference();
         dbValues.put("x(mov)", values[0]);
         dbValues.put("y(mov)", values[1]);
         dbValues.put("z(mov)", values[2]);
         mDatabase.child("usuarios").push().setValue(dbValues);
 
-        // Pass values through high-pass filter if enabled
+        // Pasa los valores usando el filtro de paso alto
         if (useHighPassFilter) {
             values = highPass(values[0], values[1], values[2]);
         }
-        
-        // Ignore data if the high-pass filter is enabled, has not yet received some data to set it
+
         if (!useHighPassFilter || (++highPassCount >= HIGH_PASS_MINIMUM)) {
             double sumOfSquares = (values[0] * values[0])
                     + (values[1] * values[1])
@@ -120,11 +118,10 @@ public class AccelerationEventListener implements SensorEventListener
 
             Log.d(TAG, "Aceleración Total = (" + acceleration + ")");
 
-            // If the plot is null, the sensor is not active. Do not plot the
-            // data or used the data to determine if the device is moving
+            //Grafica los valores de los sensores en tiempo real
             if (xyPlot != null) {
                 long current = SystemClock.uptimeMillis();
-                
+
                 // Limit how much the chart gets updated
                 if ((current - lastChartRefresh) >= CHART_REFRESH) {
                     long timestamp = (event.timestamp / 1000000) - startTime;
@@ -150,7 +147,7 @@ public class AccelerationEventListener implements SensorEventListener
     }
 
     /**
-     * This method highPass
+     * MÉTODO encargado del filtrado
      */
     private float[] highPass(float x, float y, float z) {
         float[] filteredValues = new float[3];
@@ -158,7 +155,6 @@ public class AccelerationEventListener implements SensorEventListener
         gravity[0] = ALPHA * gravity[0] + (1 - ALPHA) * x;
         gravity[1] = ALPHA * gravity[1] + (1 - ALPHA) * y;
         gravity[2] = ALPHA * gravity[2] + (1 - ALPHA) * z;
-
         filteredValues[0] = x - gravity[0];
         filteredValues[1] = y - gravity[1];
         filteredValues[2] = z - gravity[2];
@@ -166,6 +162,7 @@ public class AccelerationEventListener implements SensorEventListener
         return filteredValues;
     }
 
+    //Método encargado de calcular la aceleración total en caso se requiera
     private double totalaceleration(float x, float y, float z) {
         double totalaceleration = Math.sqrt(Math.pow(x,2)+Math.pow(y,2)+Math.pow(z,2));
         return totalaceleration;

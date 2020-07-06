@@ -22,11 +22,11 @@ import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    //Objeto mapa
     private GoogleMap mMap;
-
-    //referenciaa BD
+    //referencia a BD Firebase
     private DatabaseReference mDatabase;
-
+    //Marcadores en tiempo real
     private ArrayList<Marker> tmpRealTimeMarkers = new ArrayList<>();
     private ArrayList<Marker> realTimeMarkers = new ArrayList<>();
 
@@ -39,9 +39,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        //se instancia la BD
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
-
 
     /**
      * Manipulates the map once available.
@@ -62,10 +62,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                //Se remueve los marcadores anteriores para actualizar a los nuevos
                 for(Marker marker:realTimeMarkers){
                     marker.remove();
                 }
 
+                //Recorre todos los puntos guardados en la base de datos para dibujarlos en el mapa
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()){
                     MapsPojo mp = snapshot.getValue(MapsPojo.class);
                     Double latitud = mp.getLatitud();

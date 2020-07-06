@@ -31,28 +31,19 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
     DatabaseReference mDatabase;
     Map<String,Object> dbValues = new HashMap<>();
 
-    //LOCATION HANDLING
+    //ORIENTATION HANDLING
     private static final String TAG = "DetermineOrientationActivity";
     private static final int RATE = SensorManager.SENSOR_DELAY_NORMAL;
-
     private float[] accelerationValues;
     private float[] magneticValues;
     private boolean isFaceUp;
-
-    //LOCATION HANDLING
     String x=null,y=null,z=null,orientation=null;
     private boolean readingAccelerationData = false;
 
-    // Initialize variables for programming
-    // Initialize LOG_TAG to call in logcat to track data collected
-    // The live streaming data from both the volume sensing and motion detecting can be seen in the logcat
+    // Valores inicializados para lectura de datos (microfono)
     private static final String LOG_TAG = "DataPointCollection";
-    // Initializes the MediaRecorder as mRecorder for volume tracking
     private MediaRecorder mRecorder = null;
-    // Creates list of maximum amplitude values collected
-    // Would be used to send data to server
     public static List<String> MaxValue = new ArrayList();
-    // Initializes the SensorManager and Sensor for motion sensing
 
     public TrackingModel(ITrackingPresenter presenter){
         this.presenter = presenter;
@@ -112,13 +103,13 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
         }
 
         //MICROPHONE
-        // Constantly calls getAmplitude function
+        // Llama a la funcion getAmplitude() constantemente.
         double amp = getAmplitude();
         String max = String.valueOf(amp);
         MaxValue.add(max);
-        // Shows constant stream of maximum amplitude values in logcat
         Log.e(LOG_TAG, "Max Amplitude " +amp);
 
+        //Se registra el valor obtenido en la base de datos en tiempo real.
         mDatabase = FirebaseDatabase.getInstance().getReference();
         dbValues.put("amplitud(mic)", max);
         mDatabase.child("usuarios").push().setValue(dbValues);
@@ -131,8 +122,7 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
     }
 
     /**
-     * Generates a rotation matrix using the member data stored in
-     * accelerationValues and magneticValues.
+     * Genera una matriz de rotación a partir de los valores de los sensores
      */
     @SuppressLint("LongLogTag")
     private float[] generateRotationMatrix() {
@@ -153,10 +143,9 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
     }
 
     /**
-     * Uses the last read accelerometer and gravity values to determine if the
-     * device is face up or face down.
-     *
-     * @param rotationMatrix The rotation matrix to use if the orientation calculation
+     * Usa los valores de los sensores para determinar la orientación del dispositivo
+     * asi como también mostrar tales valores en la interfaz  y guardarlos en la BD
+     * @param rotationMatrix
      */
     @SuppressLint("LongLogTag")
     private void determineOrientation(float[] rotationMatrix) {
@@ -170,11 +159,9 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
         String XValue = String.valueOf(pitch);
         String YValue = String.valueOf(roll);
 
-
         x=(String.valueOf(azimuth));
         y=(String.valueOf(pitch));
         z=(String.valueOf(roll));
-
         Log.d(TAG, "Valores = (" + ZValue + ", " + XValue + ", " +YValue +")");
 
         Map<String,Object> xyzValues = new HashMap<>();
@@ -185,28 +172,29 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
             if (Math.abs(roll) >= 170) {
                 onFaceDown();
 
+                //Guarda los valores en la BD
                 dbValues.put("x (acel)", XValue);
                 dbValues.put("y (acel)", YValue);
                 dbValues.put("z (acel)", ZValue);
                 mDatabase.child("usuarios").push().setValue(dbValues);
 
+                //Llama al método del presentador para actualizar los valores
                 presenter.showData(XValue,YValue,ZValue,orientation);
             } else if (Math.abs(roll) <= 10) {
                 onFaceUp();
 
+                //Guarda los valores en la BD
                 dbValues.put("x (acel)", XValue);
                 dbValues.put("y (acel)", YValue);
                 dbValues.put("z (acel)", ZValue);
                 mDatabase.child("usuarios").push().setValue(dbValues);
 
+                //Llama al método del presentador para actualizar los valores
                 presenter.showData(XValue,YValue,ZValue,orientation);
             }
         }
     }
 
-    /**
-     * Handler for device being face up.
-     */
     private void onFaceUp() {
         if (!isFaceUp) {
             orientation=("Face up");
@@ -214,9 +202,6 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
         }
     }
 
-    /**
-     * Handler for device being face down.
-     */
     private void onFaceDown() {
         if (isFaceUp) {
             orientation=("Face down");
@@ -225,10 +210,10 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
     }
 
     /**
-     * Updates the views for when the selected sensor is changed
+     * Actualiza los valores del sensor al iniciar monitoreo
      */
     public void updateSelectedSensor(SensorManager sensorManager) {
-        // Clear any current registrations
+        // Limpiar algun registro realizado anteriormente
         sensorManager.unregisterListener(this);
         sensorManager.registerListener(this,
                 sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), RATE);
@@ -237,11 +222,12 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
     }
 
     /**
-     * Updates the views for when the selected sensor is changed
+     * Actualiza los valores al detener el monitoreo
      */
     public void stopSelectedSensor(SensorManager sensorManager) {
-        // Clear any current registrations
+        // Limpiar algun registro realizado anteriormente
         sensorManager.unregisterListener(this);
+        //Llama al método del presentador para actualizar los valores
         presenter.showData("","","","");
     }
 
@@ -257,6 +243,7 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
                             // Logic to handle location object
                             Log.e("Latitud:"+location.getLatitude(), "Longitud"+location.getLongitude());
 
+                            //Guarda los valores en la BD
                             dbValues.put("latitud", location.getLatitude());
                             dbValues.put("longitud", location.getLongitude());
                             mDatabase.child("usuarios").push().setValue(dbValues);
@@ -277,15 +264,13 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
     }
 
     /**
-     * Updates the views for when the selected sensor is changed
+     * Empieza el registro de los datos del microfono
      */
     public void startRecording(){
         if (mRecorder == null) {
             mRecorder = new MediaRecorder();
             mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-
             mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-
             mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             mRecorder.setOutputFile("/dev/null");
             try {
@@ -294,16 +279,14 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
                 Log.e(LOG_TAG, "prepare() failed");
             }
             mRecorder.start();
-            // Calls getAmplitude to use getMaxAmplitude filter
             getAmplitude();
         }
-        // Shows start record function has been called in logcat
         Log.e(LOG_TAG, "Start Record Called");
     }
 
 
     /**
-     * Updates the views for when the selected sensor is changed
+     * Detiene el registro de los datos del microfono
      */
     public void stopRecording(){
         if (mRecorder != null){
@@ -311,17 +294,14 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
             mRecorder.reset();
             mRecorder = null;
         }
-        // Shows stop record function has been called in logcat
         Log.e(LOG_TAG, "Stop Record Called");
     }
 
-    // Function to implement getMaxAmplitude filter
+    // Implementa el filtro correspondiente
     private double getAmplitude() {
         if (mRecorder != null) {
             // Shows getAmplitude function has been called in logcat
             Log.e(LOG_TAG, "getAmplitude Function Called");
-            // Calls getMaxAmplitude function
-            // Equation is used to get the maximum amplitude in decibels
             double max = 20*Math.log(mRecorder.getMaxAmplitude()/2700);
             return (max);
         } else {
@@ -329,11 +309,9 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
         }
     }
 
-    // Function to collect maximum amplitude data
+    // Funcion para recolectar los datos de maxima amplitud
     public double getAmplitudeMax() {
         double amp = getAmplitude();
-        // Converts double amp to string max
-        // This MaxValue would be used to create an array to send to server
         String max = String.valueOf(amp);
         MaxValue.add(max);
         // Shows value of maximum amplitude in logcat

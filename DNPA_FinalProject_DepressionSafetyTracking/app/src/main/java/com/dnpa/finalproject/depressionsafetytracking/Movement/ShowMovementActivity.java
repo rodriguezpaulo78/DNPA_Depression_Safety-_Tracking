@@ -37,9 +37,7 @@ import com.google.firebase.database.DatabaseReference;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Determines when the device has been moved and notifies the user.
- */
+//Clase encargada del activity que muestra los datos del usuario en tiempo real por medio de un gráfico(movimiento)
 public class ShowMovementActivity extends AppCompatActivity {
     private static final String TAG = "ShowMovementActivity";
     private static final int RATE = SensorManager.SENSOR_DELAY_NORMAL;
@@ -55,9 +53,6 @@ public class ShowMovementActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     private AccelerationEventListener accelerometerListener;
     private XYPlot xyPlot;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,11 +102,11 @@ public class ShowMovementActivity extends AppCompatActivity {
     @SuppressLint("LongLogTag")
     private void startReadingAccelerationData() {
         if (!readingAccelerationData) {
-            // Clear any plot that may already exist on the chart
+            // Limpiar
             xyPlot.clear();
             xyPlot.redraw();
             
-            // Disable UI components so they cannot be changed while plotting sensor data
+            // Deshabilitar componentes cuando se monitorea
             for (int i = 0; i < sensorSelector.getChildCount(); i++) {
                 sensorSelector.getChildAt(i).setEnabled(false);
             }
@@ -123,7 +118,6 @@ public class ShowMovementActivity extends AppCompatActivity {
                     sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), RATE);
             
             readingAccelerationData = true;
-
             Log.d(TAG, "Started reading acceleration data");
         }
     }
@@ -131,13 +125,12 @@ public class ShowMovementActivity extends AppCompatActivity {
     @SuppressLint("LongLogTag")
     private void stopReadingAccelerationData() {
         if (readingAccelerationData) {
-            // Re-enable sensor and options UI views
+            // Rehabilitar
             for (int i = 0; i < sensorSelector.getChildCount(); i++) {
                 sensorSelector.getChildAt(i).setEnabled(true);
             }
 
             sensorManager.unregisterListener(accelerometerListener);
-
             readingAccelerationData = false;
             Log.d(TAG, "Stopped reading acceleration data");
         }

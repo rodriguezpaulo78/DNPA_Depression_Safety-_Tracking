@@ -12,6 +12,7 @@ import com.dnpa.finalproject.depressionsafetytracking.View.TrackingView;
 
 public class SplashScreenView extends AppCompatActivity {
 
+    //Duracion SPLASH
     private final int SPLASH_DURATION = 4000;
 
     @Override

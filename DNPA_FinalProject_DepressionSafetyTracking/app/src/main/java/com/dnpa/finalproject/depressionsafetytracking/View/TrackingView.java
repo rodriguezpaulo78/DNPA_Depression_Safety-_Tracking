@@ -25,7 +25,6 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
 
     private ITrackingPresenter presenter;
 
-
     private Button mapButton, movementButton;
 
     //LOCATION HANDLING
@@ -40,8 +39,6 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
     private TextView sensorZValue;
     private SensorManager sensorManager;
 
-    //MOVEMENT HANDLING
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         presenter = new TrackingPresenter(this);
@@ -51,16 +48,14 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
 
         //LOCATION HANDLING
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
-        mapButton = findViewById(R.id.button3);
+        mapButton = findViewById(R.id.lastLocationsButton);
         mapButton.setOnClickListener(this);
         receiver = new LocationReceiver();
         intentFilter = new IntentFilter("com.dnpa.finalproject.depressionsafetytracking.SOME_ACTION");
 
         //ORIENTATION HANDLING
-        // Keep the screen on so that changes in orientation can be easily observed
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        // Get a reference to the sensor service
+        // Obtener referencia del sensor
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         orientationValue = (TextView) findViewById(R.id.orientationValue);
         sensorXValue = (TextView) findViewById(R.id.sensorXValue);
@@ -68,7 +63,7 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
         sensorZValue = (TextView) findViewById(R.id.sensorZValue);
 
         //MOVEMENT HANDLING
-        movementButton = findViewById(R.id.button4);
+        movementButton = findViewById(R.id.movementButton);
         movementButton.setOnClickListener(this);
 
     }
@@ -77,32 +72,29 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
     protected void onResume() {
         super.onResume();
         registerReceiver(receiver, intentFilter);
-
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        // Unregister updates from sensors
-
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         unregisterReceiver(receiver);
     }
 
     @Override
     public void showData(String x, String y, String z, String orientation) {
-        //Log.d("Mensajes de entrada : ",x+y+z+""+orientation);
+        //Log.d("Mensajes de entrada : "x+y+z+""+orientation);
         sensorXValue.setText(x);
         sensorYValue.setText(y);
         sensorZValue.setText(z);
         orientationValue.setText(orientation);
     }
 
+    //Llama a los métodos del presentador para iniciar monitoreo
     public void startTracking(View view) {
         ToggleButton toggleButton = (ToggleButton)view;
         if (toggleButton.isChecked()) {
@@ -116,17 +108,19 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
     }
 
     @Override
+    //Manejo de opciones de usuario a través de Intents
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.button3 :
+            case R.id.lastLocationsButton :
+                //Envia la acción al Broadcast Receiver
                 Intent intent = new Intent("com.dnpa.finalproject.depressionsafetytracking.SOME_ACTION");
                 sendBroadcast(intent);
-                Intent intent2 = new Intent(TrackingView.this,MapsActivity.class);
-                startActivity(intent2);
+                Intent mapIntent = new Intent(TrackingView.this,MapsActivity.class);
+                startActivity(mapIntent);
                 break;
-            case R.id.button4 :
-                Intent intent3 = new Intent(TrackingView.this, ShowMovementActivity.class);
-                startActivity(intent3);
+            case R.id.movementButton :
+                Intent movementIntent = new Intent(TrackingView.this, ShowMovementActivity.class);
+                startActivity(movementIntent);
                 break;
         }
     }

@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 public class LocationReceiver extends BroadcastReceiver {
 
-
     public LocationReceiver() {
     }
 
@@ -18,9 +17,7 @@ public class LocationReceiver extends BroadcastReceiver {
             Toast.makeText(context, "LASTLOCATION RECEIVED", Toast.LENGTH_LONG).show();
 
         }else {
-
             Toast.makeText(context, "NOTHING", Toast.LENGTH_LONG).show();
-
         }
     }
 
