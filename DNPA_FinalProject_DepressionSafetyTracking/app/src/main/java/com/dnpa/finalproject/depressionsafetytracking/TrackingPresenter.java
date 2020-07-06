@@ -1,37 +1,50 @@
 package com.dnpa.finalproject.depressionsafetytracking;
 
+import android.hardware.SensorManager;
+
 public class TrackingPresenter implements ITrackingPresenter {
 
     private ITrackingView view;
     private ITrackingModel model;
 
-    public TrackingPresenter(ITrackingView view){
+    public TrackingPresenter(ITrackingView view) {
         this.view = view;
         model = new TrackingModel(this);
     }
 
-    @Override
-    public void showData() {
 
+    @Override
+    public void showData(String x, String y, String z, String orientation) {
+        if(view!=null){
+            view.showData( x,  y,  z,  orientation);
+        }
     }
 
     @Override
-    public void detectingUbication() {
-
+    public void startReadingData() {
+        if(view!=null){
+            model.startReadingData();
+        }
     }
 
     @Override
-    public void detectingOrientation() {
-
+    public void stopReadingData() {
+        if(view!=null){
+            model.stopReadingData();
+        }
     }
 
     @Override
-    public void detectingMovement() {
-
+    public void updateSelectedSensor(SensorManager sensorManager) {
+        if(view!=null) {
+            model.updateSelectedSensor(sensorManager);
+        }
     }
 
     @Override
-    public void detectingMicrophone() {
-
+    public void stopSelectedSensor(SensorManager sensorManager) {
+        if(view!=null) {
+            model.stopSelectedSensor(sensorManager);
+        }
     }
 }

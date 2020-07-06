@@ -1,8 +1,10 @@
 package com.dnpa.finalproject.depressionsafetytracking;
 
+import android.hardware.SensorManager;
+
 public interface ITrackingModel {
-    void detectingUbication();
-    void detectingOrientation();
-    void detectingMovement();
-    void detectingMicrophone();
+    void startReadingData();
+    void stopReadingData();
+    void updateSelectedSensor(SensorManager sensorManager);
+    void stopSelectedSensor(SensorManager sensorManager);
 }
