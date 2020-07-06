@@ -28,6 +28,8 @@ import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.LineAndPointRenderer;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -35,6 +37,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Receives accelerometer events and writes them to CSV files and plots them on a graph.
@@ -57,6 +60,10 @@ public class AccelerationEventListener implements SensorEventListener
     private XYPlot xyPlot;
     private long lastChartRefresh;
     private boolean useHighPassFilter;
+
+
+    DatabaseReference mDatabase;
+    Map<String,Object> dbValues = new HashMap<>();
 
     public AccelerationEventListener(XYPlot xyPlot, boolean useHighPassFilter) {
         this.xyPlot = xyPlot;
@@ -92,6 +99,12 @@ public class AccelerationEventListener implements SensorEventListener
     public void onSensorChanged(SensorEvent event){
         float[] values = event.values.clone();
         Log.d(TAG, "Valores = (" + values[0] + ", " + values[1] + ", " +values[2] +")");
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        dbValues.put("x(mov)", values[0]);
+        dbValues.put("y(mov)", values[1]);
+        dbValues.put("z(mov)", values[2]);
+        mDatabase.child("usuarios").push().setValue(dbValues);
 
         // Pass values through high-pass filter if enabled
         if (useHighPassFilter) {

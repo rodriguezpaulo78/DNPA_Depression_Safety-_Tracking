@@ -32,6 +32,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.XYPlot;
 import com.dnpa.finalproject.depressionsafetytracking.R;
+import com.google.firebase.database.DatabaseReference;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Determines when the device has been moved and notifies the user.
@@ -51,6 +55,9 @@ public class ShowMovementActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     private AccelerationEventListener accelerometerListener;
     private XYPlot xyPlot;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

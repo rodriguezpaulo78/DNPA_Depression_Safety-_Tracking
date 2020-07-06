@@ -28,6 +28,7 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
 
     //LOCATION HANDLING
     DatabaseReference mDatabase;
+    Map<String,Object> dbValues = new HashMap<>();
 
     //LOCATION HANDLING
     private static final String TAG = "DetermineOrientationActivity";
@@ -116,6 +117,10 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
         MaxValue.add(max);
         // Shows constant stream of maximum amplitude values in logcat
         Log.e(LOG_TAG, "Max Amplitude " +amp);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        dbValues.put("amplitud(mic)", max);
+        mDatabase.child("usuarios").push().setValue(dbValues);
     }
 
     @SuppressLint("LongLogTag")
@@ -171,14 +176,28 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
 
         Log.d(TAG, "Valores = (" + ZValue + ", " + XValue + ", " +YValue +")");
 
+        Map<String,Object> xyzValues = new HashMap<>();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         //Para ver si esta de cabeza o de frente
         if (pitch <= 10) {
             if (Math.abs(roll) >= 170) {
                 onFaceDown();
+
+                dbValues.put("x (acel)", XValue);
+                dbValues.put("y (acel)", YValue);
+                dbValues.put("z (acel)", ZValue);
+                mDatabase.child("usuarios").push().setValue(dbValues);
+
                 presenter.showData(XValue,YValue,ZValue,orientation);
             } else if (Math.abs(roll) <= 10) {
                 onFaceUp();
+
+                dbValues.put("x (acel)", XValue);
+                dbValues.put("y (acel)", YValue);
+                dbValues.put("z (acel)", ZValue);
+                mDatabase.child("usuarios").push().setValue(dbValues);
+
                 presenter.showData(XValue,YValue,ZValue,orientation);
             }
         }
@@ -236,10 +255,10 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
                         if (location != null) {
                             // Logic to handle location object
                             Log.e("Latitud:"+location.getLatitude(), "Longitud"+location.getLongitude());
-                            Map<String,Object> latlong = new HashMap<>();
-                            latlong.put("latitud", location.getLatitude());
-                            latlong.put("longitud", location.getLongitude());
-                            mDatabase.child("usuarios").push().setValue(latlong);
+
+                            dbValues.put("latitud", location.getLatitude());
+                            dbValues.put("longitud", location.getLongitude());
+                            mDatabase.child("usuarios").push().setValue(dbValues);
                         }
 
                         /*
