@@ -43,8 +43,6 @@
             android:label="@string/title_activity_maps"></activity>
 
         <!-- Location Test -->
-        <activity
-            android:name=".Location.GetLocation"></activity>
 
         <receiver android:name=".Location.LocationReceiver" >
             <intent-filter>
@@ -54,7 +52,7 @@
 
         <!-- Movement View -->
         <activity
-            android:name=".Movement.DetermineMovementActivity"></activity>
+            android:name=".Movement.ShowMovementActivity"></activity>
 
         <!-- SplashScreen -->
         <activity   android:name=".TrackingView"

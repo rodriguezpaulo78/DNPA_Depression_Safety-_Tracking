@@ -4,25 +4,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.dnpa.finalproject.depressionsafetytracking.Location.GetLocation;
 import com.dnpa.finalproject.depressionsafetytracking.Location.LocationReceiver;
 import com.dnpa.finalproject.depressionsafetytracking.Location.MapsActivity;
-import com.dnpa.finalproject.depressionsafetytracking.Movement.DetermineMovementActivity;
+import com.dnpa.finalproject.depressionsafetytracking.Movement.ShowMovementActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class TrackingView extends AppCompatActivity implements ITrackingView, View.OnClickListener{
 
@@ -128,7 +122,7 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
                 startActivity(intent2);
                 break;
             case R.id.button4 :
-                Intent intent3 = new Intent(TrackingView.this, DetermineMovementActivity.class);
+                Intent intent3 = new Intent(TrackingView.this, ShowMovementActivity.class);
                 startActivity(intent3);
                 break;
         }

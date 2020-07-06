@@ -36,8 +36,8 @@ import com.dnpa.finalproject.depressionsafetytracking.R;
 /**
  * Determines when the device has been moved and notifies the user.
  */
-public class DetermineMovementActivity extends AppCompatActivity {
-    private static final String TAG = "DetermineMovementActivity";
+public class ShowMovementActivity extends AppCompatActivity {
+    private static final String TAG = "ShowMovementActivity";
     private static final int RATE = SensorManager.SENSOR_DELAY_NORMAL;
     private static final String USE_HIGH_PASS_FILTER_PREFERENCE_KEY =
             "USE_HIGH_PASS_FILTER_PREFERENCE_KEY";

@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
-import com.dnpa.finalproject.depressionsafetytracking.Location.GetLocation;
 
 public class SplashScreenView extends AppCompatActivity {
 
@@ -23,7 +22,7 @@ public class SplashScreenView extends AppCompatActivity {
 
         new Handler().postDelayed(new Runnable(){
             public void run(){
-                Intent intent = new Intent(SplashScreenView.this, GetLocation.class);
+                Intent intent = new Intent(SplashScreenView.this, TrackingView.class);
                 startActivity(intent);
                 finish();
             };
