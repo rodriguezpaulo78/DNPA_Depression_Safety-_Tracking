@@ -1,4 +1,4 @@
-package com.dnpa.finalproject.depressionsafetytracking;
+package com.dnpa.finalproject.depressionsafetytracking.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +15,9 @@ import android.widget.ToggleButton;
 import com.dnpa.finalproject.depressionsafetytracking.Location.LocationReceiver;
 import com.dnpa.finalproject.depressionsafetytracking.Location.MapsActivity;
 import com.dnpa.finalproject.depressionsafetytracking.Movement.ShowMovementActivity;
+import com.dnpa.finalproject.depressionsafetytracking.Presenter.ITrackingPresenter;
+import com.dnpa.finalproject.depressionsafetytracking.Presenter.TrackingPresenter;
+import com.dnpa.finalproject.depressionsafetytracking.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 

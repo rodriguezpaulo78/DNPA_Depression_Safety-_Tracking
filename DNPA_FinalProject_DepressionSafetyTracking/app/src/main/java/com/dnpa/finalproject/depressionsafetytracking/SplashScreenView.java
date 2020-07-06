@@ -8,6 +8,8 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.dnpa.finalproject.depressionsafetytracking.View.TrackingView;
+
 public class SplashScreenView extends AppCompatActivity {
 
     private final int SPLASH_DURATION = 4000;

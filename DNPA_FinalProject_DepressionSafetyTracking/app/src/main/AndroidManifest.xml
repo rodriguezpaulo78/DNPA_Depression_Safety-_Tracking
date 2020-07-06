@@ -54,8 +54,12 @@
         <activity
             android:name=".Movement.ShowMovementActivity"></activity>
 
+        <!-- Principal View -->
+        <activity
+            android:name=".View.TrackingView"></activity>
+
         <!-- SplashScreen -->
-        <activity   android:name=".TrackingView"
+        <activity   android:name=".SplashScreenView"
                     android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

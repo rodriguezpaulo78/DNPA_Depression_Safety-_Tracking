@@ -1,9 +1,12 @@
-package com.dnpa.finalproject.depressionsafetytracking;
+package com.dnpa.finalproject.depressionsafetytracking.Presenter;
 
 import android.hardware.SensorManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.dnpa.finalproject.depressionsafetytracking.View.ITrackingView;
+import com.dnpa.finalproject.depressionsafetytracking.Model.ITrackingModel;
+import com.dnpa.finalproject.depressionsafetytracking.Model.TrackingModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 
 public class TrackingPresenter implements ITrackingPresenter {
