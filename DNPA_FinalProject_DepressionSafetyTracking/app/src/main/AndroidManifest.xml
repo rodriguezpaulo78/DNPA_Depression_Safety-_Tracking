@@ -46,6 +46,12 @@
         <activity
             android:name=".Location.GetLocation"></activity>
 
+        <receiver android:name=".Location.LocationReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
         <!-- Movement View -->
         <activity
             android:name=".Movement.DetermineMovementActivity"></activity>

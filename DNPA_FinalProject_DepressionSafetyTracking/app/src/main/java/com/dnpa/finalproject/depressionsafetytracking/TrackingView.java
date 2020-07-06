@@ -3,6 +3,7 @@ package com.dnpa.finalproject.depressionsafetytracking;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.dnpa.finalproject.depressionsafetytracking.Location.GetLocation;
+import com.dnpa.finalproject.depressionsafetytracking.Location.LocationReceiver;
 import com.dnpa.finalproject.depressionsafetytracking.Location.MapsActivity;
 import com.dnpa.finalproject.depressionsafetytracking.Movement.DetermineMovementActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -31,6 +33,8 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
 
     //LOCATION HANDLING
     private FusedLocationProviderClient fusedLocationClient;
+    LocationReceiver receiver;
+    IntentFilter intentFilter;
 
     //ORIENTATION HANDLING
     private TextView orientationValue;
@@ -49,11 +53,12 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
         setContentView(R.layout.tracking_activity);
 
         //LOCATION HANDLING
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         mapButton = findViewById(R.id.button3);
         mapButton.setOnClickListener(this);
+        receiver = new LocationReceiver();
+        intentFilter = new IntentFilter("com.dnpa.finalproject.depressionsafetytracking.SOME_ACTION");
 
         //ORIENTATION HANDLING
         // Keep the screen on so that changes in orientation can be easily observed
@@ -74,6 +79,7 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
     @Override
     protected void onResume() {
         super.onResume();
+        registerReceiver(receiver, intentFilter);
 
     }
 
@@ -82,6 +88,13 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
         super.onPause();
         // Unregister updates from sensors
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        unregisterReceiver(receiver);
     }
 
     @Override
@@ -109,12 +122,14 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.button3 :
-                Intent intent = new Intent(TrackingView.this,MapsActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent("com.dnpa.finalproject.depressionsafetytracking.SOME_ACTION");
+                sendBroadcast(intent);
+                Intent intent2 = new Intent(TrackingView.this,MapsActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.button4 :
-                Intent intent2 = new Intent(TrackingView.this, DetermineMovementActivity.class);
-                startActivity(intent2);
+                Intent intent3 = new Intent(TrackingView.this, DetermineMovementActivity.class);
+                startActivity(intent3);
                 break;
         }
     }
