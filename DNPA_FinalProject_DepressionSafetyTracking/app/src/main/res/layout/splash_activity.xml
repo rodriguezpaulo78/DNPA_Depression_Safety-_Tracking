@@ -4,16 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000"
+    tools:context=".Splash.SplashScreenView">
 
-    tools:context=".SplashScreenView">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Depression Safety \n Tracking"
+        android:layout_marginTop="60dp"
+        android:textAlignment="center"
+        android:textColor="#fff"
+        android:textSize="40dp"/>
 
     <pl.droidsonroids.gif.GifTextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/splashscreen"
-        android:text="\n\n\nDEPRESSION SAFETY \n TRACKING"
-        android:textSize="40dp"
+        android:layout_height="420dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/tracking"
         android:textAlignment="center"
-        android:textColor="#fff"/>
+        android:textColor="#fff"
+        android:textSize="38dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
+        android:text="DNPA-2020"
+        android:textAlignment="viewEnd"
+        android:textColor="#fff"
+        android:textSize="20dp" />
 
 </LinearLayout>

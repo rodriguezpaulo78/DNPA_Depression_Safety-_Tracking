@@ -1,4 +1,4 @@
-package com.dnpa.finalproject.depressionsafetytracking;
+package com.dnpa.finalproject.depressionsafetytracking.Splash;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -8,12 +8,13 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.dnpa.finalproject.depressionsafetytracking.R;
 import com.dnpa.finalproject.depressionsafetytracking.View.TrackingView;
 
 public class SplashScreenView extends AppCompatActivity {
 
     //Duracion SPLASH
-    private final int SPLASH_DURATION = 4000;
+    private final int SPLASH_DURATION = 2500;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

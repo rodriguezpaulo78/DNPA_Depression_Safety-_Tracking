@@ -88,7 +88,6 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
         if (!hasPermissions(this, PERMISSIONS)) {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         }
-
     }
 
     @Override
