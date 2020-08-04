@@ -9,16 +9,6 @@
     tools:context=".View.TrackingView"
     android:background="#202732">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="127dp"
-        android:layout_height="116dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icono" />
 
     <TextView
         android:id="@+id/textView2"
