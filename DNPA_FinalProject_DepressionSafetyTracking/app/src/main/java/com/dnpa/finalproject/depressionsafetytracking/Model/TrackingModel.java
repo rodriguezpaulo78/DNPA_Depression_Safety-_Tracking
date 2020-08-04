@@ -177,6 +177,7 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
                 dbValues.put("y (acel)", YValue);
                 dbValues.put("z (acel)", ZValue);
                 mDatabase.child("usuarios").push().setValue(dbValues);
+                //mDatabase.removeValue(); //método para eliminar si hay muchos datos en BD
 
                 //Llama al método del presentador para actualizar los valores
                 presenter.showData(XValue,YValue,ZValue,orientation);
