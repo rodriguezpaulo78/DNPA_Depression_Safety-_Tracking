@@ -8,6 +8,7 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.dnpa.finalproject.depressionsafetytracking.Login.LoginActivity;
 import com.dnpa.finalproject.depressionsafetytracking.R;
 import com.dnpa.finalproject.depressionsafetytracking.View.TrackingView;
 
@@ -26,7 +27,7 @@ public class SplashScreenView extends AppCompatActivity {
 
         new Handler().postDelayed(new Runnable(){
             public void run(){
-                Intent intent = new Intent(SplashScreenView.this, TrackingView.class);
+                Intent intent = new Intent(SplashScreenView.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             };

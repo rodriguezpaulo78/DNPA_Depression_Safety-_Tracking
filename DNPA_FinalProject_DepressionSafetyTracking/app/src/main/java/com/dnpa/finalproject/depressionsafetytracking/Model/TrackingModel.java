@@ -190,6 +190,7 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
                 dbValues.put("z (acel)", ZValue);
                 mDatabase.child("usuarios").push().setValue(dbValues);
 
+                //mDatabase.removeValue();
                 //Llama al método del presentador para actualizar los valores
                 presenter.showData(XValue,YValue,ZValue,orientation);
             }
@@ -248,6 +249,7 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
                             dbValues.put("latitud", location.getLatitude());
                             dbValues.put("longitud", location.getLongitude());
                             mDatabase.child("usuarios").push().setValue(dbValues);
+                            //mDatabase.removeValue();
                         }
 
                         /*

@@ -28,6 +28,6 @@
         android:textColor="@color/colorWhite"
         android:layout_height="wrap_content"
         android:id="@+id/mail_user"
-        android:text="info@codinginflow.com" />
+        android:text="" />
 
 </LinearLayout>

@@ -35,6 +35,7 @@ import android.widget.ToggleButton;
 
 import com.dnpa.finalproject.depressionsafetytracking.Location.LocationReceiver;
 import com.dnpa.finalproject.depressionsafetytracking.Location.MapsActivity;
+import com.dnpa.finalproject.depressionsafetytracking.Login.LoginActivity;
 import com.dnpa.finalproject.depressionsafetytracking.Movement.ShowMovementActivity;
 import com.dnpa.finalproject.depressionsafetytracking.Presenter.ITrackingPresenter;
 import com.dnpa.finalproject.depressionsafetytracking.Presenter.TrackingPresenter;
@@ -75,6 +76,11 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
     ImageView closeAboutImg;
     Button btnAccept;
     TextView titleTv, messageTv;
+
+    //LOGIN
+    String EmailHolder;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,11 +149,11 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
 
         //Datos de usuario
         //Navigation
-        /*
-        nav_user.setText(personName);
-        nav_mail.setText(personEmail);
-        Glide.with(this).load(personPhoto).into(nav_image);
-         */
+        Intent intent = getIntent();
+        EmailHolder = intent.getStringExtra(LoginActivity.userEmail);
+        nav_mail.setText(nav_mail.getText().toString()+ EmailHolder);
+
+
     }
 
     @Override
@@ -275,6 +281,8 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //signOut();
+                                finish();
+                                Toast.makeText(TrackingView.this,"Log Out Successfull", Toast.LENGTH_LONG).show();
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
