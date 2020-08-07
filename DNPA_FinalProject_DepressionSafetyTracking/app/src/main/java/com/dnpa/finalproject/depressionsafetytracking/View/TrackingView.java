@@ -33,6 +33,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.bumptech.glide.Glide;
+import com.dnpa.finalproject.depressionsafetytracking.AudioRecord.RecordAudioActivity;
 import com.dnpa.finalproject.depressionsafetytracking.Location.LocationReceiver;
 import com.dnpa.finalproject.depressionsafetytracking.Location.MapsActivity;
 import com.dnpa.finalproject.depressionsafetytracking.Login.LoginActivity;
@@ -40,16 +42,22 @@ import com.dnpa.finalproject.depressionsafetytracking.Movement.ShowMovementActiv
 import com.dnpa.finalproject.depressionsafetytracking.Presenter.ITrackingPresenter;
 import com.dnpa.finalproject.depressionsafetytracking.Presenter.TrackingPresenter;
 import com.dnpa.finalproject.depressionsafetytracking.R;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class TrackingView extends AppCompatActivity implements ITrackingView, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
 
     private int MY_PERMISSIONS_REQUEST_READ_CONTACTS;
     private ITrackingPresenter presenter;
 
-    private Button mapButton, movementButton;
+    private Button mapButton, movementButton, audioButton, showButton;
 
     //LOCATION HANDLING
     private FusedLocationProviderClient fusedLocationClient;
@@ -109,6 +117,12 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
         movementButton = findViewById(R.id.movementButton);
         movementButton.setOnClickListener(this);
 
+        //SHOW - AUDIO
+        audioButton = findViewById(R.id.audioButton);
+        audioButton.setOnClickListener(this);
+        showButton = findViewById(R.id.showButton);
+        showButton.setOnClickListener(this);
+
         //PERMISSIONS HANDLING
         int PERMISSION_ALL = 1;
         String[] PERMISSIONS = {
@@ -145,15 +159,33 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
             navigationView.setCheckedItem(R.id.nav_home);
         }
 
+
+
         myDialog = new Dialog(this);
 
         //Datos de usuario
-        //Navigation
-        Intent intent = getIntent();
-        EmailHolder = intent.getStringExtra(LoginActivity.userEmail);
-        nav_mail.setText(nav_mail.getText().toString()+ EmailHolder);
 
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
+            Glide.with(this).load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).into(nav_image);
+            //nav_image.setImageURI(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl());
+            nav_user.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+            nav_mail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+            /*
+            //LOGIN GOOGLE
+            GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
+            if(signInAccount != null){
+                nav_user.setText(signInAccount.getDisplayName());
+                nav_mail.setText(signInAccount.getEmail());
+                nav_image.setImageURI(signInAccount.getPhotoUrl());
+            }else{
+            //LOGIN FIREBASE
+            Intent intent = getIntent();
+            EmailHolder = intent.getStringExtra(LoginActivity.userEmail);
+            nav_mail.setText(nav_mail.getText().toString()+ EmailHolder);
+            }
 
+             */
+        }
     }
 
     @Override
@@ -227,6 +259,14 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
                 Intent movementIntent = new Intent(TrackingView.this, ShowMovementActivity.class);
                 startActivity(movementIntent);
                 break;
+            case R.id.audioButton :
+                Intent audioIntent = new Intent(TrackingView.this, RecordAudioActivity.class);
+                startActivity(audioIntent);
+                break;
+            case R.id.showButton :
+                //Intent showIntent = new Intent(TrackingView.this, ShowTrackingData.class);
+                //startActivity(showIntent);
+                break;
         }
     }
 
@@ -280,9 +320,22 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                //signOut();
-                                finish();
-                                Toast.makeText(TrackingView.this,"Log Out Successfull", Toast.LENGTH_LONG).show();
+                                signOut();
+
+
+                                /*
+                                if(FirebaseAuth.getInstance().getCurrentUser().getProviderId()=="google.com"){
+                                    //LOGOUT GOOGLE
+                                    FirebaseAuth.getInstance().signOut();
+                                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                                    startActivity(intent);
+                                }else{
+                                    //LOGOUT FIREBASE
+                                    finish();
+                                    Toast.makeText(TrackingView.this,"Log Out Successfull", Toast.LENGTH_LONG).show();
+                                }
+
+                                 */
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -343,5 +396,15 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
 
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         myDialog.show();
+    }
+
+    public void signOut(){
+        AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(TrackingView.this, "CERRASTE SESION OK", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
     }
 }

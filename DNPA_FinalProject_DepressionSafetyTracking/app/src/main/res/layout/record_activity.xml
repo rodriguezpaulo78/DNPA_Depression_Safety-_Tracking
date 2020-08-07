@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="100px"
+    android:orientation="vertical"
+    tools:context=".AudioRecord.RecordAudioActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:text="Grabación de Audio con AudioRecord"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="158dp"
+        android:layout_height="191dp"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:src="@drawable/iconaudio" />
+
+    <Button
+        android:id="@+id/btnStart"
+        android:layout_width="162dp"
+        android:layout_height="61dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="100px"
+        android:layout_marginBottom="100px"
+        android:background="@drawable/boton_redondo"
+        android:drawablePadding="8dp"
+        android:text="Iniciar Grabación"
+        android:textColor="@android:color/white"
+        android:backgroundTint="#4CAF50"
+        tools:layout_editor_absoluteX="156dp"
+        tools:layout_editor_absoluteY="393dp" />
+
+    <Button
+        android:id="@+id/btnStop"
+        android:layout_width="169dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="100px"
+        tools:layout_editor_absoluteX="156dp"
+        tools:layout_editor_absoluteY="393dp"
+        android:drawablePadding="8dp"
+        android:background="@drawable/boton_redondo2"
+        android:text="Detener Grabación"
+        />
+
+    <Button
+        android:id="@+id/btnPlay"
+        android:layout_width="198dp"
+        android:layout_height="88dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="150dp"
+        android:layout_weight="1"
+        android:background="@drawable/boton_redondo"
+        android:text="Reproducir Audio" />
+</LinearLayout>

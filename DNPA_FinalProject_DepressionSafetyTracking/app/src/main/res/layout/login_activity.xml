@@ -64,4 +64,26 @@
         android:layout_marginTop="20dp"
         android:text="NOT A USER? | SIGN UP" />
 
+    <Button
+        android:id="@+id/forgotPass"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonRegister"
+        android:layout_marginTop="20dp"
+        android:text="FORGOT PASS?" />
+
+    <Button
+        android:id="@+id/google_signIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/forgotPass"
+
+        android:background="@drawable/button_green_round"
+
+        android:drawableLeft="@drawable/common_google_signin_btn_icon_dark"
+        android:drawingCacheQuality="auto"
+        android:elevation="8dp"
+        android:text="Sign In with Google"
+        android:textColor="#fff" />
+
 </RelativeLayout>

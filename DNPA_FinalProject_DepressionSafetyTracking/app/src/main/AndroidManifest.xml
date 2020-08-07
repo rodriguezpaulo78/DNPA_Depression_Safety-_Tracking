@@ -20,6 +20,7 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
+        android:requestLegacyExternalStorage="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_index"
         android:label="@string/app_name"
@@ -55,6 +56,8 @@
 
         <!-- Movement View -->
         <activity android:name=".Movement.ShowMovementActivity" />
+        <!-- Movement View -->
+        <activity android:name=".AudioRecord.RecordAudioActivity" />
         <!-- Principal View -->
         <activity android:name=".View.TrackingView" />
 

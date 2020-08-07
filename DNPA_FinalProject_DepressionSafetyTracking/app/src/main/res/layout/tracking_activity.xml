@@ -158,6 +158,18 @@
                 android:layout_height="wrap_content"
                 android:text="VER MONITOREO MOVIMIENTO" />
 
+            <Button
+                android:id="@+id/audioButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="GRABAR AUDIO" />
+
+            <Button
+                android:id="@+id/showButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="VER DATOS MONITOREO" />
+
 
         </LinearLayout>
 
