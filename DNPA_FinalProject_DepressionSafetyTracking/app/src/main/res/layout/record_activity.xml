@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="100px"
+    android:layout_marginTop="50px"
     android:orientation="vertical"
     tools:context=".AudioRecord.RecordAudioActivity">
 
@@ -33,38 +33,37 @@
     <Button
         android:id="@+id/btnStart"
         android:layout_width="162dp"
-        android:layout_height="61dp"
+        android:layout_height="34dp"
         android:layout_gravity="center"
         android:layout_marginTop="100px"
-        android:layout_marginBottom="100px"
+        android:layout_marginBottom="50px"
         android:background="@drawable/boton_redondo"
+        android:backgroundTint="#4CAF50"
         android:drawablePadding="8dp"
         android:text="Iniciar Grabación"
         android:textColor="@android:color/white"
-        android:backgroundTint="#4CAF50"
         tools:layout_editor_absoluteX="156dp"
         tools:layout_editor_absoluteY="393dp" />
 
     <Button
         android:id="@+id/btnStop"
         android:layout_width="169dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="100px"
-        tools:layout_editor_absoluteX="156dp"
-        tools:layout_editor_absoluteY="393dp"
+        android:layout_marginBottom="50px"
         android:drawablePadding="8dp"
-        android:background="@drawable/boton_redondo2"
         android:text="Detener Grabación"
-        />
+        tools:layout_editor_absoluteX="156dp"
+        tools:layout_editor_absoluteY="393dp" />
 
     <Button
         android:id="@+id/btnPlay"
         android:layout_width="198dp"
-        android:layout_height="88dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="150dp"
-        android:layout_weight="1"
-        android:background="@drawable/boton_redondo"
+        android:layout_marginBottom="50dp"
+
         android:text="Reproducir Audio" />
+
+
 </LinearLayout>

@@ -1,9 +1,12 @@
 package com.dnpa.finalproject.depressionsafetytracking.AudioRecord;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
@@ -11,16 +14,26 @@ import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.media.AudioTrack;
 import android.media.MediaRecorder;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.dnpa.finalproject.depressionsafetytracking.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
 
 import net.sourceforge.lame.lowlevel.LameEncoder;
 import net.sourceforge.lame.mp3.Lame;
@@ -36,6 +49,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,6 +72,17 @@ public class RecordAudioActivity extends AppCompatActivity {
     private Button btnStart, btnStop, btnPlay;
 
 
+    //uri to store file
+    private Uri filePath;
+
+    //firebase objects
+    private DatabaseReference mDatabase;
+    private StorageReference mStorageRef;
+    StorageReference mountainsRef;
+    private StorageTask mStorageTask;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +90,9 @@ public class RecordAudioActivity extends AppCompatActivity {
         btnStart= findViewById(R.id.btnStart);
         btnStop= findViewById(R.id.btnStop);
         btnPlay= findViewById(R.id.btnPlay);
-
+        mStorageRef = FirebaseStorage.getInstance().getReference();
+        // Create a reference to "mountains.jpg"
+        mountainsRef = mStorageRef.child("/sdcard/PORFIN.pcm");
         btnStop.setEnabled(false);
         btnPlay.setEnabled(false);
 
@@ -230,8 +258,9 @@ public class RecordAudioActivity extends AppCompatActivity {
 
             encodePcmToMp3(byteData);
 
-
-            ///
+            //SAVE IN FIREBASE
+            Uri abc = Uri.fromFile(file);
+            //uploadFile(abc);
             File f1 = new File("/sdcard/PORFIN.pcm"); // The location of your PCM file
             File f2 = new File("/sdcard/PORFIN.wav"); // The location where you want your WAV file
             try {
@@ -239,6 +268,26 @@ public class RecordAudioActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            Uri file2 = Uri.fromFile(new File("/sdcard/PORFIN.wav"));
+            StorageReference riversRef = mStorageRef.child("images/"+timeStamp+file2.getLastPathSegment());
+            mStorageTask = riversRef.putFile(file2);
+
+            // Register observers to listen for when the download is done or if it fails
+            mStorageTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle unsuccessful uploads
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                    // ...
+                }
+            });
+
 
             in.close();
         } catch (FileNotFoundException e) {
@@ -398,5 +447,6 @@ public class RecordAudioActivity extends AppCompatActivity {
             output.write(value.charAt(i));
         }
     }
+
 
 }
