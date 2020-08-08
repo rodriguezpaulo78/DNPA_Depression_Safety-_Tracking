@@ -1,89 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="#fff"
     tools:context=".Login.LoginActivity">
 
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:transitionName="logo_image"
+        android:src="@drawable/logo" />
+
     <TextView
-        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="User Login "
-        android:textColor="#000"
-        android:textSize="20dp"
-        android:hint="df"/>
+        android:text="Hello there, Welcome Back"
+        android:transitionName="logo_text"
+        android:textSize="40sp"
+        android:fontFamily="@font/bungee"
+        android:textColor="#000"/>
 
-    <EditText
-        android:layout_width="fill_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
+        android:text="Sign in to continue"
+        android:textSize="18sp"
+        android:textColor="#000" />
 
-        android:textColor="#000"
-        android:ems="10"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:id="@+id/editEmail"
-        android:gravity="center"/>
-
-    <EditText
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:hint="Enter Password"
-        android:textColor="#000"
-        android:ems="10"
-        android:layout_below="@+id/editEmail"
-        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
         android:layout_marginTop="20dp"
-        android:id="@+id/editPassword"
-        android:gravity="center"/>
+        android:layout_marginBottom="20dp">
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:textColor="#000"
+            android:ems="10"
+            android:hint="Correo Electronico"
+            android:textColorHint="#FFCDCACA"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:id="@+id/editEmail"
+            android:backgroundTint="#000"
+            android:gravity="center"/>
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:hint="Enter Password"
+                android:textColorHint="#FFCDCACA"
+                android:textColor="#000"
+                android:ems="10"
+                android:backgroundTint="#000"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:id="@+id/editPassword"
+                android:gravity="center"/>
+
+<CheckBox
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/seePassword"
+    android:text="Mostrar Contraseña"
+    android:buttonTint="@color/colorBlack"
+    android:textColor="@color/colorBlack"/>
+
+        <Button
+
+            android:id="@+id/forgotPass"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="right"
+            android:text="FORGOT PASS?" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/buttonLogin"
-        android:layout_below="@+id/editPassword"
-        android:layout_marginTop="20dp"
-        android:text="Log IN "/>
+        android:layout_marginTop="5dp"
+        android:background="@color/colorBlack"
+        android:text="LOG IN "/>
 
     <Button
         android:id="@+id/buttonRegister"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonLogin"
-        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:background="#3F51B5"
+        android:layout_marginTop="5dp"
         android:text="NOT A USER? | SIGN UP" />
 
-    <Button
-        android:id="@+id/forgotPass"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonRegister"
-        android:layout_marginTop="20dp"
-        android:text="FORGOT PASS?" />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#d13033"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="O login VIA"
+            android:textSize="10sp"
+            android:textColor="#000" />
 
-    <Button
+        <Button
         android:id="@+id/google_signIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/forgotPass"
-
         android:background="@drawable/button_green_round"
-
         android:drawableLeft="@drawable/common_google_signin_btn_icon_dark"
         android:drawingCacheQuality="auto"
         android:elevation="8dp"
         android:text="Sign In with Google"
         android:textColor="#fff" />
 
-</RelativeLayout>
+    </LinearLayout>
+
+
+
+</LinearLayout>

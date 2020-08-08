@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -43,6 +46,7 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity {
 
     EditText Email, Password;
+    CheckBox seePass;
     Button LogInButton, RegisterButton, forgotButton;
     FirebaseAuth mAuth;
     FirebaseAuth.AuthStateListener mAuthListner;
@@ -80,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Email = (EditText) findViewById(R.id.editEmail);
         Password = (EditText) findViewById(R.id.editPassword);
+        seePass = (CheckBox) findViewById(R.id.seePassword);
         dialog = new ProgressDialog(this);
 
         mAuth = FirebaseAuth.getInstance();
@@ -133,7 +138,6 @@ public class LoginActivity extends AppCompatActivity {
         forgotButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 FirebaseAuth.getInstance().sendPasswordResetEmail(Email.getText().toString())
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -167,6 +171,48 @@ public class LoginActivity extends AppCompatActivity {
                 RC_SIGN_IN);
 
          */
+
+        //Control de EditText
+        Email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(Email.getText().toString().isEmpty()){
+                    if(hasFocus){
+                        Email.setHint("");
+                    }else{
+                        Email.setHint("Correo Electronico");
+                    }
+                }
+            }
+        });
+
+        Password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(Password.getText().toString().isEmpty()){
+                    if(hasFocus){
+                        Password.setHint("");
+
+
+                    }else{
+                        Password.setHint("Enter Password");
+                    }
+                }
+            }
+        });
+
+        seePass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(!isChecked){
+                    // show password
+                    Password.setTransformationMethod(new PasswordTransformationMethod());
+
+                } else{
+                    Password.setTransformationMethod(null);
+                }
+            }
+        });
     }
 
     @Override
