@@ -186,6 +186,8 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
 
              */
         }
+
+        showPermissions();
     }
 
     @Override
@@ -321,21 +323,6 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 signOut();
-
-
-                                /*
-                                if(FirebaseAuth.getInstance().getCurrentUser().getProviderId()=="google.com"){
-                                    //LOGOUT GOOGLE
-                                    FirebaseAuth.getInstance().signOut();
-                                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                                    startActivity(intent);
-                                }else{
-                                    //LOGOUT FIREBASE
-                                    finish();
-                                    Toast.makeText(TrackingView.this,"Log Out Successfull", Toast.LENGTH_LONG).show();
-                                }
-
-                                 */
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -375,6 +362,32 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
     //Mostrar CUSTOM DIALOG BOX
     public void showAbout(){
         myDialog.setContentView(R.layout.about);
+        closeAboutImg = (ImageView) myDialog.findViewById(R.id.closeAbout);
+        btnAccept = (Button) myDialog.findViewById(R.id.btnAceptar);
+        titleTv = (TextView) myDialog.findViewById(R.id.titleAbout);
+        messageTv = (TextView) myDialog.findViewById(R.id.messageAbout);
+
+        btnAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+
+        closeAboutImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
+    }
+
+    //Mostrar CUSTOM DIALOG BOX
+    public void showPermissions(){
+        myDialog.setContentView(R.layout.permissions);
         closeAboutImg = (ImageView) myDialog.findViewById(R.id.closeAbout);
         btnAccept = (Button) myDialog.findViewById(R.id.btnAceptar);
         titleTv = (TextView) myDialog.findViewById(R.id.titleAbout);

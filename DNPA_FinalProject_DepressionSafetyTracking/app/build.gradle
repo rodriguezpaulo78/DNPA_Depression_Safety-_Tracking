@@ -21,34 +21,29 @@ android {
 }
 
 dependencies {
-    //SPLASHSCREEN GIF
-    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.10'
-    //GOOGLE PLAY SERVICES REFERED TO LOCATION
-    implementation "com.google.android.gms:play-services-location:17.0.0"
-    //PLOT LIBRARY
-    implementation files('libs/Androidplot-core-0.5.0-release.jar')
-    implementation files('libs\\tritonus-share-0.3.7-2.jar')
-    implementation files('libs\\net.sourceforge.lame-3.98.4.jar')
-    //NAV_bAR
+    //LIBRERIAS
+    implementation files('libs/Androidplot-core-0.5.0-release.jar') //ANDROID PLOT (MOV.)
+    implementation files('libs\\tritonus-share-0.3.7-2.jar')        //JAVAX AUDIO SYSTEM
+    implementation files('libs\\net.sourceforge.lame-3.98.4.jar')   //JAVA LAME
+    //SUPPORT DESIGN (NAV. BAR)
     implementation 'com.android.support:design:29.0.0'
-    //MAPS
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
-    //STORAGE
+    //FIREBASE DATABASE (ALMACENAMIENTO DATA)
     implementation 'com.google.firebase:firebase-database:19.3.1'
-    //AUTH VIA FIREBASE
+    //FIREBASE STORAGE (ALMACENAMIENTO ARCHIVOS)
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
+    //FIREBASE AUTHENTICATION
     implementation 'com.google.firebase:firebase-auth:19.3.2'
     implementation 'com.google.firebase:firebase-core:17.4.4'
-    //AUTH VIA GOOGLE
-    implementation 'com.google.android.gms:play-services-auth:18.1.0'
-    //MULTIPLE AUTH
     implementation 'com.firebaseui:firebase-ui-auth:6.2.0'
-    //Storage
-    implementation 'com.google.firebase:firebase-storage:19.1.1'
+    //GOOGLE PLAY SERVICES - MAPS
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    //GOOGLE PLAY SERVICES - LOCATION
+    implementation "com.google.android.gms:play-services-location:17.0.0"
+    //GOOGLE PLAY SERVICES - AUTHENTICATION VIA GOOGLE
+    implementation 'com.google.android.gms:play-services-auth:18.1.0'
 
     implementation 'com.github.bumptech.glide:glide:4.11.0'
-
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
-
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'

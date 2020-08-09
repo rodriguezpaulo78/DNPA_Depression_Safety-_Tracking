@@ -1,50 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_register"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="#fff"
     tools:context=".Login.RegisterActivity">
+
+    <ImageView
+        android:id="@+id/logoImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:transitionName="logo_image"
+        android:src="@drawable/logo" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="User Sign Up"
-        android:textColor="#000"
-        android:textSize="20dp" />
+        android:text="User SIGN UP"
+        android:transitionName="logo_text"
+        android:textSize="40sp"
+        android:fontFamily="@font/bungee"
+        android:textColor="#000" />
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-        android:hint="Enter Name"
         android:textColor="#000"
         android:ems="10"
-        android:layout_below="@+id/textView"
+        android:hint="Enter username"
+        android:textColorHint="#FFCDCACA"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:id="@+id/editName"
+        android:backgroundTint="#000"
         android:gravity="center"/>
 
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-        android:hint="Enter Email"
         android:textColor="#000"
         android:ems="10"
-        android:layout_below="@+id/editName"
+        android:hint="Correo Electronico"
+        android:textColorHint="#FFCDCACA"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:id="@+id/editEmail"
+        android:backgroundTint="#000"
         android:gravity="center"/>
 
     <EditText
@@ -52,27 +58,38 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:hint="Enter Password"
+        android:textColorHint="#FFCDCACA"
         android:textColor="#000"
         android:ems="10"
-        android:layout_below="@+id/editEmail"
+        android:backgroundTint="#000"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:id="@+id/editPassword"
         android:gravity="center"/>
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/seePassword"
+        android:text="Mostrar Contraseña"
+        android:buttonTint="@color/colorBlack"
+        android:textColor="@color/colorBlack"/>
+
     <Button
-        android:id="@+id/buttonRegister"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editPassword"
-        android:layout_marginTop="20dp"
-        android:text="SIGN UP" />
+        android:id="@+id/buttonRegister"
+        android:layout_marginTop="5dp"
+        android:background="@color/colorBlack"
+        android:text="SIGN UP "/>
+
     <Button
         android:id="@+id/buttonLogin"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonRegister"
-        android:layout_marginTop="20dp"
-        android:text="LOGIN" />
+        android:layout_gravity="center"
+        android:background="#3F51B5"
+        android:layout_marginTop="5dp"
+        android:text="VOLVER" />
 
-</RelativeLayout>
+</LinearLayout>

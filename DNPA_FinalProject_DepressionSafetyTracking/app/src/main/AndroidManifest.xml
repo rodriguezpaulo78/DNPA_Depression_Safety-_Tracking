@@ -7,14 +7,13 @@
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality.
     -->
+    <!--Gives permission to Internet / GPS-->
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <!--Gives permission to write storage-->
     <permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <!--Gives permission to record audio-->
     <permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -28,9 +27,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
 
-        <activity android:name=".Login.LoginActivity"></activity>
-        <activity android:name=".Login.RegisterActivity"></activity>
-
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -43,10 +39,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".Location.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
-
         <!-- Location Test -->
         <receiver android:name=".Location.LocationReceiver" >
             <intent-filter>
@@ -54,23 +46,26 @@
             </intent-filter>
         </receiver>
 
-        <!-- Movement View -->
+        <!-- Activities -->
+        <activity   android:name=".Location.MapsActivity"
+                    android:label="@string/title_activity_maps"></activity>
+        <!-- Login/Register View -->
+        <activity android:name=".Login.LoginActivity"/>
+        <activity android:name=".Login.RegisterActivity"/>
+        <!-- Movement Tracking View -->
         <activity android:name=".Movement.ShowMovementActivity" />
-        <!-- Movement View -->
+        <!-- Audio Recording View -->
         <activity android:name=".AudioRecord.RecordAudioActivity" />
         <!-- Principal View -->
         <activity android:name=".View.TrackingView" />
-
         <!-- SplashScreen -->
         <activity   android:name=".Splash.SplashScreenView"
                     android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
     </application>
-
 </manifest>

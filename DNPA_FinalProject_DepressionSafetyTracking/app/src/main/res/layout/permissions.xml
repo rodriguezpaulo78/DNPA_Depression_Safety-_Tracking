@@ -47,7 +47,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:text="asdasdas"
+                android:text="Protección de Datos Personales"
+                android:textColor="@color/colorBlack"
                 android:textAlignment="center"
                 android:textSize="25dp"
                 android:textStyle="bold" />
@@ -66,9 +67,10 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
-                android:textAlignment="center"
+                android:textAlignment="gravity"
                 android:textSize="18dp"
-                android:text="asdsadasda" />
+                android:textColor="@color/colorBlack"
+                android:text="Los datos recopilados en DepressionSafeyTracking han sido autorizados para su posterior tratamiento como objetivo de este análisis" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -76,7 +78,8 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
-                android:text="Evita recibir multas de Plaqueo."
+                android:text="Tu información está protegida"
+                android:textColor="@color/colorBlack"
                 android:textAlignment="center"
                 android:textSize="20sp"
                 android:textStyle="bold" />

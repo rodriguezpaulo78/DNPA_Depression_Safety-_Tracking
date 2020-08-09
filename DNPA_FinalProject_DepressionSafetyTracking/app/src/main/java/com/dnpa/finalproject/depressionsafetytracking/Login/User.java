@@ -1,13 +1,10 @@
 package com.dnpa.finalproject.depressionsafetytracking.Login;
 
 /**
- * Created by shiva on 31-01-2018.
+ * User Model to Firebase Login Auth
  */
-
 class User {
     String Displayname;
-
-
     String Email;
     long createdAt;
 
@@ -18,16 +15,13 @@ class User {
         this.createdAt=createdAt;
     }
 
-
-    public String getDisplayname() {
+    public String getDisplayname(){
         return Displayname;
     }
-
-    public String getEmail() {
+    public String getEmail(){
         return Email;
     }
-
-    public long getCreatedAt() {
+    public long getCreatedAt(){
         return createdAt;
     }
 

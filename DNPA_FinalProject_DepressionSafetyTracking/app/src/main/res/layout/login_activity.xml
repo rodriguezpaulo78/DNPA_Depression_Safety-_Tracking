@@ -34,9 +34,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp">
+        android:orientation="vertical">
 
         <EditText
             android:layout_width="fill_parent"
@@ -52,30 +50,29 @@
             android:backgroundTint="#000"
             android:gravity="center"/>
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:hint="Enter Password"
-                android:textColorHint="#FFCDCACA"
-                android:textColor="#000"
-                android:ems="10"
-                android:backgroundTint="#000"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:id="@+id/editPassword"
-                android:gravity="center"/>
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Enter Password"
+            android:textColorHint="#FFCDCACA"
+            android:textColor="#000"
+            android:ems="10"
+            android:backgroundTint="#000"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:id="@+id/editPassword"
+            android:gravity="center"/>
 
-<CheckBox
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/seePassword"
-    android:text="Mostrar Contraseña"
-    android:buttonTint="@color/colorBlack"
-    android:textColor="@color/colorBlack"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/seePassword"
+            android:text="Mostrar Contraseña"
+            android:buttonTint="@color/colorBlack"
+            android:textColor="@color/colorBlack"/>
 
         <Button
-
             android:id="@+id/forgotPass"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
@@ -83,27 +80,23 @@
             android:layout_gravity="right"
             android:text="FORGOT PASS?" />
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/buttonLogin"
-        android:layout_marginTop="5dp"
-        android:background="@color/colorBlack"
-        android:text="LOG IN "/>
-
-    <Button
-        android:id="@+id/buttonRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="#3F51B5"
-        android:layout_marginTop="5dp"
-        android:text="NOT A USER? | SIGN UP" />
-
-        <View
+        <Button
             android:layout_width="fill_parent"
-            android:layout_height="2dp"
-            android:background="#d13033"/>
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonLogin"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorBlack"
+            android:text="LOG IN "/>
+
+        <Button
+            android:id="@+id/buttonRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="#3F51B5"
+            android:layout_marginTop="5dp"
+            android:text="NOT A USER? | SIGN UP" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -112,18 +105,15 @@
             android:textColor="#000" />
 
         <Button
-        android:id="@+id/google_signIn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_green_round"
-        android:drawableLeft="@drawable/common_google_signin_btn_icon_dark"
-        android:drawingCacheQuality="auto"
-        android:elevation="8dp"
-        android:text="Sign In with Google"
-        android:textColor="#fff" />
+            android:id="@+id/google_signIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorBlack"
+            android:drawableLeft="@drawable/common_google_signin_btn_icon_dark"
+            android:drawingCacheQuality="auto"
+            android:elevation="8dp"
+            android:text="Sign In with Google"
+            android:textColor="#fff" />
 
     </LinearLayout>
-
-
-
 </LinearLayout>
