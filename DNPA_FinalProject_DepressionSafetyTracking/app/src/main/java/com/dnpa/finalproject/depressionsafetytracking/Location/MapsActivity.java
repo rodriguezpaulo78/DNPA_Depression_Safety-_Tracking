@@ -3,13 +3,23 @@ package com.dnpa.finalproject.depressionsafetytracking.Location;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.dnpa.finalproject.depressionsafetytracking.R;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -30,14 +40,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayList<Marker> tmpRealTimeMarkers = new ArrayList<>();
     private ArrayList<Marker> realTimeMarkers = new ArrayList<>();
 
+    public String user;
+    public int index;
+
+    //Dialog about
+    Dialog myDialog;
+    ImageView closeAboutImg;
+    Button btnAccept;
+    TextView titleTv, messageTv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maps_activity);
+
+
+        myDialog = new Dialog(this);
+
+        user =getIntent().getStringExtra("USER");
+        index = getIntent().getIntExtra("INDEX",0);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        //show message
+        showMessage();
+
 
         //se instancia la BD
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -56,9 +86,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+
+
+
         //direeccionar a la bd
         //cada vez que cambien los valores poner puntos en el mapa
-        mDatabase.child("usuarios").addValueEventListener(new ValueEventListener() {
+        mDatabase.child(user.substring(0,index)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -81,6 +114,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 realTimeMarkers.clear();
                 realTimeMarkers.addAll(tmpRealTimeMarkers);
+
+                //Auto Zoom to MAP MARKERS
+                LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                for (Marker marker : tmpRealTimeMarkers) {
+                    builder.include(marker.getPosition());
+                }
+                LatLngBounds bounds = builder.build();
+                int padding = 0; // offset from edges of the map in pixels
+                CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                //mMap.moveCamera(cu);
+                mMap.animateCamera(cu);
+
             }
 
             @Override
@@ -89,5 +134,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+    }
+
+    //Mostrar CUSTOM DIALOG BOX
+    public void showMessage(){
+        myDialog.setContentView(R.layout.maps_message);
+        closeAboutImg = (ImageView) myDialog.findViewById(R.id.closeAbout);
+        btnAccept = (Button) myDialog.findViewById(R.id.btnAceptar);
+        titleTv = (TextView) myDialog.findViewById(R.id.titleAbout);
+        messageTv = (TextView) myDialog.findViewById(R.id.messageAbout);
+
+        btnAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+
+        closeAboutImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
     }
 }

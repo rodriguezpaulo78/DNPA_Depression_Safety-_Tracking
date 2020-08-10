@@ -262,6 +262,8 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
                 Intent intent = new Intent("com.dnpa.finalproject.depressionsafetytracking.SOME_ACTION");
                 sendBroadcast(intent);
                 Intent mapIntent = new Intent(TrackingView.this,MapsActivity.class);
+                mapIntent.putExtra("USER", textToFirebase);
+                mapIntent.putExtra("INDEX", index);
                 startActivity(mapIntent);
                 break;
             case R.id.movementButton :
@@ -401,8 +403,7 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
                 Toast.makeText(this, "aJUSTES", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.acerca:
-                Toast.makeText(this, "Acerca", Toast.LENGTH_SHORT).show();
-                //showAbout();
+                showAbout();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
