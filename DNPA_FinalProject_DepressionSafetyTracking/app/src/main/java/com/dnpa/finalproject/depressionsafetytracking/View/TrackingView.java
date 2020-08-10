@@ -242,7 +242,7 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
         switch (v.getId()){
             case R.id.lastLocationsButton :
                 //Envia la acción al Broadcast Receiver
-                Intent intent = new Intent("com.dnpa.finalproject.depressionsafetytracking.SOME_ACTION");
+                Intent intent = new Intent("BroadcastReceiver_ACTION");
                 sendBroadcast(intent);
                 Intent mapIntent = new Intent(TrackingView.this,MapsActivity.class);
                 mapIntent.putExtra("USER", textToFirebase);
