@@ -16,6 +16,7 @@
 package com.dnpa.finalproject.depressionsafetytracking.Movement;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -54,11 +55,18 @@ public class ShowMovementActivity extends AppCompatActivity {
     private AccelerationEventListener accelerometerListener;
     private XYPlot xyPlot;
 
+    public String user;
+    public int index;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.movement_activity);
-        
+
+        user =getIntent().getStringExtra("USER");
+        index = getIntent().getIntExtra("INDEX",0);
+
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         sensorSelector = (RadioGroup)findViewById(R.id.sensorSelector);
@@ -112,7 +120,7 @@ public class ShowMovementActivity extends AppCompatActivity {
             }
 
             xyPlot.setTitle("Sensor.TYPE_ACCELEROMETER");
-                accelerometerListener = new AccelerationEventListener(xyPlot, true);
+                accelerometerListener = new AccelerationEventListener(xyPlot, true, user, index);
 
             sensorManager.registerListener(accelerometerListener,
                     sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), RATE);

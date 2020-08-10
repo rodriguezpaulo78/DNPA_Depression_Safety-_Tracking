@@ -18,7 +18,6 @@
         android:elevation="5dp"
         android:layout_alignParentRight="true"/>
 
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,71 +27,74 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" >
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="25dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/titleAbout"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:text="asdasdas"
-                android:textAlignment="center"
-                android:textSize="25dp"
-                android:textStyle="bold" />
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp"
+                android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:src="@drawable/ic_location"/>
+                <TextView
+                    android:id="@+id/titleAbout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="PROYECTO FINAL DNPA 2020"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/messageAbout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="20dp"
-                android:textAlignment="center"
-                android:textSize="18dp"
-                android:text="asdsadasda" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/ic_location"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:text="Evita recibir multas de Plaqueo."
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/messageAbout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18dp"
+                    android:text="Este proyecto ha sido realizado por alumnos de la EPIS - UNSA como proyecto final del curso Desarrollo de Nuevas Plataformas Avanzado" />
 
-            <Button
-                android:id="@+id/btnAceptar"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="De Acuerdo"
-                android:textColor="@color/colorWhite"
-                android:background="@drawable/button_green_round"
-                android:layout_gravity="center_horizontal" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Esperamos una buena nota :c"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnAceptar"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="De Acuerdo"
+                    android:textColor="@color/colorWhite"
+                    android:background="@drawable/button_green_round"
+                    android:layout_gravity="center_horizontal" />
+
+            </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
     </androidx.cardview.widget.CardView>
+
 </RelativeLayout>

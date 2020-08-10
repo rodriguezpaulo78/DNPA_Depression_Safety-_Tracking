@@ -10,7 +10,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 public interface ITrackingPresenter {
 
     void showData(String x, String y, String z, String orientation);    //Muestra los datos obtenidos del modelo
-    void startReadingData();
+    void startReadingData(String x);
     void stopReadingData();
     void updateSelectedSensor(SensorManager sensorManager);
     void stopSelectedSensor(SensorManager sensorManager);

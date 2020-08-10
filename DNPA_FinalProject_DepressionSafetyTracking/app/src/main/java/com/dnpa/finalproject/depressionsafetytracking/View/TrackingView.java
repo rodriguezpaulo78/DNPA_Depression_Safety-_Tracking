@@ -20,6 +20,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Menu;
@@ -57,7 +58,16 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
     private int MY_PERMISSIONS_REQUEST_READ_CONTACTS;
     private ITrackingPresenter presenter;
 
+    Handler handler = new Handler();
+    Runnable runnable;
+    int delay = 3*1000; //Delay for 15 seconds.  One second = 1000 milliseconds.
+
+    private final static long ACC_CHECK_INTERVAL = 3000;
+    private long lastAccCheck;
+
     private Button mapButton, movementButton, audioButton, showButton;
+    private String textToFirebase;
+    private int index;
 
     //LOCATION HANDLING
     private FusedLocationProviderClient fusedLocationClient;
@@ -87,7 +97,6 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
 
     //LOGIN
     String EmailHolder;
-
 
 
     @Override
@@ -159,32 +168,16 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
             navigationView.setCheckedItem(R.id.nav_home);
         }
 
-
-
         myDialog = new Dialog(this);
 
         //Datos de usuario
-
         if(FirebaseAuth.getInstance().getCurrentUser()!=null){
             Glide.with(this).load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).into(nav_image);
             //nav_image.setImageURI(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl());
             nav_user.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
             nav_mail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-            /*
-            //LOGIN GOOGLE
-            GoogleSignInAccount signInAccount = GoogleSignIn.getLastSignedInAccount(this);
-            if(signInAccount != null){
-                nav_user.setText(signInAccount.getDisplayName());
-                nav_mail.setText(signInAccount.getEmail());
-                nav_image.setImageURI(signInAccount.getPhotoUrl());
-            }else{
-            //LOGIN FIREBASE
-            Intent intent = getIntent();
-            EmailHolder = intent.getStringExtra(LoginActivity.userEmail);
-            nav_mail.setText(nav_mail.getText().toString()+ EmailHolder);
-            }
-
-             */
+            textToFirebase = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+            index = textToFirebase.indexOf('@');
         }
 
         showPermissions();
@@ -232,12 +225,22 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
 
         if (checkIfLocationOpened()){
             if (toggleButton.isChecked()) {
-                presenter.startReadingData();
+                presenter.startReadingData(textToFirebase.substring(0,index));
                 presenter.updateSelectedSensor(sensorManager);
                 presenter.uploadLastLocation(this, fusedLocationClient);
+
+                handler.postDelayed( runnable = new Runnable() {
+                    public void run() {
+                        //do something
+                        Log.e("", "LLAMANDO METODO CADA 3 SEGUNDOS ");
+                        handler.postDelayed(runnable, delay);
+                    }
+                }, delay);
             } else {
                 presenter.stopReadingData();
                 presenter.stopSelectedSensor(sensorManager);
+                handler.removeCallbacks(runnable); //stop handler when activity not visible
+
             }
         }else{
             Log.e("", "LLAMANDO METODO PARA ACTIVAR GPS ");
@@ -259,10 +262,14 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
                 break;
             case R.id.movementButton :
                 Intent movementIntent = new Intent(TrackingView.this, ShowMovementActivity.class);
+                movementIntent.putExtra("USER", textToFirebase);
+                movementIntent.putExtra("INDEX", index);
                 startActivity(movementIntent);
                 break;
             case R.id.audioButton :
                 Intent audioIntent = new Intent(TrackingView.this, RecordAudioActivity.class);
+                audioIntent.putExtra("USER", textToFirebase);
+                audioIntent.putExtra("INDEX", index);
                 startActivity(audioIntent);
                 break;
             case R.id.showButton :
@@ -309,10 +316,25 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
             case R.id.nav_home:
                 //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
                 break;
+            case R.id.nav_gps:
+                //Intent mapIntent = new Intent(TrackingView.this,MapsActivity.class);
+                //startActivity(mapIntent);
+                break;
+            case R.id.nav_mov:
+                //Intent movementIntent = new Intent(TrackingView.this, ShowMovementActivity.class);
+                //startActivity(movementIntent);
+                break;
+            case R.id.nav_audio:
+                //Intent audioIntent = new Intent(TrackingView.this, RecordAudioActivity.class);
+                //startActivity(audioIntent);
+                break;
             case R.id.nav_ajustes:
                 //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AjustesFragment()).commit();
                 break;
             case R.id.nav_about:
+                showAbout();
+                break;
+            case R.id.nav_help:
                 showAbout();
                 break;
             case R.id.nav_salir:

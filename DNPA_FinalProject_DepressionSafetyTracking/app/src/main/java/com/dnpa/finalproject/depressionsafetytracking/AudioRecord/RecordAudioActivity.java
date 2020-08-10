@@ -81,18 +81,23 @@ public class RecordAudioActivity extends AppCompatActivity {
     StorageReference mountainsRef;
     private StorageTask mStorageTask;
 
-
+    public String user;
+    public int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.record_activity);
+
+        user =getIntent().getStringExtra("USER");
+        index = getIntent().getIntExtra("INDEX",0);
+
         btnStart= findViewById(R.id.btnStart);
         btnStop= findViewById(R.id.btnStop);
         btnPlay= findViewById(R.id.btnPlay);
         mStorageRef = FirebaseStorage.getInstance().getReference();
         // Create a reference to "mountains.jpg"
-        mountainsRef = mStorageRef.child("/sdcard/PORFIN.pcm");
+        mountainsRef = mStorageRef.child("/sdcard/DSTRecord.pcm");
         btnStop.setEnabled(false);
         btnPlay.setEnabled(false);
 
@@ -100,7 +105,7 @@ public class RecordAudioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    Toast.makeText(getApplicationContext(), "Recording Audio", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Recording Audio", Toast.LENGTH_SHORT).show();
                     btnStop.setEnabled(true);
                     btnPlay.setEnabled(false);
                     startRecording();
@@ -114,7 +119,7 @@ public class RecordAudioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    Toast.makeText(getApplicationContext(), "Stopping Recording", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Stopping Recording", Toast.LENGTH_SHORT).show();
                     btnStop.setEnabled(false);
                     btnPlay.setEnabled(true);
                     stopRecording();
@@ -128,8 +133,8 @@ public class RecordAudioActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    Toast.makeText(getApplicationContext(), "Playing Recording", Toast.LENGTH_LONG).show();
-                    playingRecording("/sdcard/PORFIN.pcm");
+                    Toast.makeText(getApplicationContext(), "Playing Recording", Toast.LENGTH_SHORT).show();
+                    playingRecording("/sdcard/DSTRecord.pcm");
                 } catch (Exception e) {
                     // make something
                 }
@@ -194,7 +199,7 @@ public class RecordAudioActivity extends AppCompatActivity {
 
     private void writeAudioDataToFile() {
         //Write the output audio in byte
-        String filePath = "/sdcard/PORFIN.pcm";
+        String filePath = "/sdcard/DSTRecord.pcm";
         byte saudioBuffer[] = new byte[bufferSize];
 
         FileOutputStream os = null;
@@ -261,17 +266,17 @@ public class RecordAudioActivity extends AppCompatActivity {
             //SAVE IN FIREBASE
             Uri abc = Uri.fromFile(file);
             //uploadFile(abc);
-            File f1 = new File("/sdcard/PORFIN.pcm"); // The location of your PCM file
-            File f2 = new File("/sdcard/PORFIN.wav"); // The location where you want your WAV file
+            File f1 = new File("/sdcard/DSTRecord.pcm"); // The location of your PCM file
+            File f2 = new File("/sdcard/DSTRecord.wav"); // The location where you want your WAV file
             try {
                 rawToWave(f1, f2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            Uri file2 = Uri.fromFile(new File("/sdcard/PORFIN.wav"));
-            StorageReference riversRef = mStorageRef.child("images/"+timeStamp+file2.getLastPathSegment());
+            String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date());
+            Uri file2 = Uri.fromFile(new File("/sdcard/DSTRecord.wav"));
+            StorageReference riversRef = mStorageRef.child(user.substring(0,index)+"/"+timeStamp+"_"+file2.getLastPathSegment());
             mStorageTask = riversRef.putFile(file2);
 
             // Register observers to listen for when the download is done or if it fails
@@ -335,7 +340,7 @@ public class RecordAudioActivity extends AppCompatActivity {
 
         encoder.close();
 
-        File file = new File("/sdcard/PORFIN.mp3");
+        File file = new File("/sdcard/DSTRecord.mp3");
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -346,7 +351,7 @@ public class RecordAudioActivity extends AppCompatActivity {
 
             FileOutputStream stream = null;
             try {
-                stream = new FileOutputStream("/sdcard/PORFIN.mp3");
+                stream = new FileOutputStream("/sdcard/DSTRecord.mp3");
                 stream.write(mp3.toByteArray());
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

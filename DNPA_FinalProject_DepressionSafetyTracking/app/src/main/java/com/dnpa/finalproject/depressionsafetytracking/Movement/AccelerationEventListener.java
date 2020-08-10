@@ -58,12 +58,17 @@ public class AccelerationEventListener implements SensorEventListener {
     private XYPlot xyPlot;
     private long lastChartRefresh;
     private boolean useHighPassFilter;
+    private String user;
+    private int i;
 
     //BD Firebase
     DatabaseReference mDatabase;
     Map<String,Object> dbValues = new HashMap<>();
 
-    public AccelerationEventListener(XYPlot xyPlot, boolean useHighPassFilter) {
+    public AccelerationEventListener(XYPlot xyPlot, boolean useHighPassFilter, String a, int index) {
+        user= a;
+        i=index;
+
         this.xyPlot = xyPlot;
         this.useHighPassFilter = useHighPassFilter;
         
@@ -103,7 +108,7 @@ public class AccelerationEventListener implements SensorEventListener {
         dbValues.put("x(mov)", values[0]);
         dbValues.put("y(mov)", values[1]);
         dbValues.put("z(mov)", values[2]);
-        mDatabase.child("usuarios").push().setValue(dbValues);
+        mDatabase.child(user.substring(0,i)).push().setValue(dbValues);
 
         // Pasa los valores usando el filtro de paso alto
         if (useHighPassFilter) {

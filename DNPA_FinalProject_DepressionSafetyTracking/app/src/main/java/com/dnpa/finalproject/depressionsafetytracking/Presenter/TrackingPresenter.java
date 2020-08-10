@@ -1,6 +1,7 @@
 package com.dnpa.finalproject.depressionsafetytracking.Presenter;
 
 import android.hardware.SensorManager;
+import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +14,11 @@ public class TrackingPresenter implements ITrackingPresenter {
 
     private ITrackingView view;
     private ITrackingModel model;
+
+    Handler handler = new Handler();
+    Runnable runnable;
+    int delay = 3*1000; //Delay for 15 seconds.  One second = 1000 milliseconds.
+
 
     public TrackingPresenter(ITrackingView view) {
         this.view = view;
@@ -29,10 +35,10 @@ public class TrackingPresenter implements ITrackingPresenter {
     }
 
     @Override
-    public void startReadingData() {
+    public void startReadingData(String x) {
         if(view!=null){
             //Llama al método desarrollado en el modelo
-            model.startReadingData();
+            model.startReadingData(x);
         }
     }
 

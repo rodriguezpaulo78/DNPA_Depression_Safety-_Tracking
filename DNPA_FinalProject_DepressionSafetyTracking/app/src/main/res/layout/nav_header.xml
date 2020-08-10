@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="176dp"
+    android:layout_height="185dp"
     android:background="@color/colorPrimary"
     android:gravity="bottom"
     android:padding="16dp"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
         android:id="@+id/name_user"
-        android:text="Coding in Flow"
+        android:text="Nombre del usuario"
         android:textColor="@color/colorWhite"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
@@ -28,6 +28,6 @@
         android:textColor="@color/colorWhite"
         android:layout_height="wrap_content"
         android:id="@+id/mail_user"
-        android:text="" />
+        android:text="Correo del usuario" />
 
 </LinearLayout>

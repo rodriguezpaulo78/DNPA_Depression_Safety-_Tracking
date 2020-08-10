@@ -7,7 +7,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 //Interfaz del Modelo
 public interface ITrackingModel {
 
-    void startReadingData();    //Inicia el monitoreo
+    void startReadingData(String x);    //Inicia el monitoreo
     void stopReadingData();     //Detiene el monitore
     void updateSelectedSensor(SensorManager sensorManager);     //Inicia lectura de datos del sensor
     void stopSelectedSensor(SensorManager sensorManager);       //Detiene lectura de datos del sensor
