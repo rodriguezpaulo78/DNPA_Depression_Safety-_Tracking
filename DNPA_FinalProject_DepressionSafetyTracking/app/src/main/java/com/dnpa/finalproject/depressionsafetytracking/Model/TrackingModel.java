@@ -171,9 +171,9 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
     private void writeData(){
         Log.d(TAG, "Valores = (" + ZValue + ", " + XValue + ", " +YValue +")");
         //Guarda los valores en la BD
-        dbValues.put("x (acel)", XValue);
-        dbValues.put("y (acel)", YValue);
-        dbValues.put("z (acel)", ZValue);
+        dbValues.put("x (orient)", XValue);
+        dbValues.put("y (orient)", YValue);
+        dbValues.put("z (orient)", ZValue);
         mDatabase.child(user).push().setValue(dbValues);
         //mDatabase.removeValue(); //método para eliminar si hay muchos datos en BD
         //Llama al método del presentador para actualizar los valores

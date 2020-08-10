@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -21,7 +20,6 @@ import com.dnpa.finalproject.depressionsafetytracking.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -34,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     //VIEW
     EditText name,email,password;
-    Button mRegisterbtn;
+    Button mRegisterBtn;
     CheckBox seePass;
     TextView mLoginPageBack;
     String Name,Email,Password;
@@ -42,6 +40,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     //FIREBASE
     FirebaseAuth mAuth;
     DatabaseReference mdatabase;
+
+    //ProgressDialog
     ProgressDialog mDialog;
 
     @Override
@@ -53,43 +53,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         name = (EditText)findViewById(R.id.editName);
         email = (EditText)findViewById(R.id.editEmail);
         password = (EditText)findViewById(R.id.editPassword);
-        mRegisterbtn = (Button)findViewById(R.id.buttonRegister);
+        mRegisterBtn = (Button)findViewById(R.id.buttonRegister);
         mLoginPageBack = (TextView)findViewById(R.id.buttonLogin);
         seePass = (CheckBox) findViewById(R.id.seePassword);
 
+        mRegisterBtn.setOnClickListener(this);
+        mLoginPageBack.setOnClickListener(this);
+
         // for authentication using FirebaseAuth.
         mAuth = FirebaseAuth.getInstance();
-        mRegisterbtn.setOnClickListener(this);
-        mLoginPageBack.setOnClickListener(this);
-        mDialog = new ProgressDialog(this);
         mdatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        //Control de OBJETOS DE VIEW
-        email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(email.getText().toString().isEmpty()){
-                    if(hasFocus){
-                        email.setHint("");
-                    }else{
-                        email.setHint("Correo Electronico");
-                    }
-                }
-            }
-        });
+        mDialog = new ProgressDialog(this);
 
-        password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(password.getText().toString().isEmpty()){
-                    if(hasFocus){
-                        password.setHint("");
-                    }else{
-                        password.setHint("Enter Password");
-                    }
-                }
-            }
-        });
+        onFocusChange(email);
+        onFocusChange(password);
 
         seePass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -104,10 +82,25 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
+    public void onFocusChange(final EditText textToChange){
+        textToChange.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(textToChange.getText().toString().isEmpty()){
+                    if(hasFocus){
+                        textToChange.setHint("");
+                    }else{
+                        textToChange.setHint("Enter Password");
+                    }
+                }
+            }
+        });
+    }
+
     //CONTROLA QUE BOTON ES PRESIONADO
     @Override
     public void onClick(View v) {
-        if (v==mRegisterbtn){
+        if (v== mRegisterBtn){
             UserRegister();
         }else if (v== mLoginPageBack){
             new AlertDialog.Builder(RegisterActivity.this)

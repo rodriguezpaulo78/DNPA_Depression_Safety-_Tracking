@@ -55,7 +55,7 @@
         <!-- Movement Tracking View -->
         <activity android:name=".Movement.ShowMovementActivity" />
         <!-- Audio Recording View -->
-        <activity android:name=".AudioRecord.RecordAudioActivity" />
+        <activity android:name=".AudioRecording.RecordAudioActivity" />
         <!-- Principal View -->
         <activity android:name=".View.TrackingView" />
         <!-- SplashScreen -->

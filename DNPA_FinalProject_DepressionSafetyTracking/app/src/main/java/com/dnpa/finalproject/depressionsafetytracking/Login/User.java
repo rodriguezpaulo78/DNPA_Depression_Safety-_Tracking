@@ -26,5 +26,4 @@ class User {
     public long getCreatedAt(){
         return createdAt;
     }
-
 }
