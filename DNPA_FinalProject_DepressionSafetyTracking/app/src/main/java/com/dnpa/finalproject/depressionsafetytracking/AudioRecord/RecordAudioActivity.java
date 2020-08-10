@@ -70,7 +70,7 @@ public class RecordAudioActivity extends AppCompatActivity {
     private AudioRecord recorder = null;
     private Thread recordingThread = null;
     private boolean isRecording = false;
-    private Button btnStart, btnStop, btnPlay;
+    private Button btnStart, btnStop, btnPlay, btnSave;
 
 
     //uri to store file
@@ -101,11 +101,13 @@ public class RecordAudioActivity extends AppCompatActivity {
         btnStart= findViewById(R.id.btnStart);
         btnStop= findViewById(R.id.btnStop);
         btnPlay= findViewById(R.id.btnPlay);
+        btnSave= findViewById(R.id.btnSend);
         mStorageRef = FirebaseStorage.getInstance().getReference();
         // Create a reference to "mountains.jpg"
         mountainsRef = mStorageRef.child("/sdcard/DSTRecord.pcm");
         btnStop.setEnabled(false);
         btnPlay.setEnabled(false);
+        btnSave.setEnabled(false);
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +116,7 @@ public class RecordAudioActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Recording Audio", Toast.LENGTH_SHORT).show();
                     btnStop.setEnabled(true);
                     btnPlay.setEnabled(false);
+                    btnSave.setEnabled(false);
                     startRecording();
                 } catch (Exception e) {
                     Log.d(TAG, "Error in Start Recording ");
@@ -128,6 +131,7 @@ public class RecordAudioActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Stopping Recording", Toast.LENGTH_SHORT).show();
                     btnStop.setEnabled(false);
                     btnPlay.setEnabled(true);
+                    btnSave.setEnabled(true);
                     stopRecording();
                 } catch (Exception e) {
                     Log.d(TAG, "Error in Stop Recording");
@@ -151,6 +155,18 @@ public class RecordAudioActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    Toast.makeText(getApplicationContext(), "Saving Recording", Toast.LENGTH_SHORT).show();
+                    savingRecording("/sdcard/DSTRecord.pcm");
+                } catch (Exception e) {
+                    // make something
+                }
             }
         });
 
@@ -267,44 +283,14 @@ public class RecordAudioActivity extends AppCompatActivity {
         byte[] byteData = new byte[(int) file.length()];
         Log.d(TAG, "laptm1" + (int) file.length()+"");
 
-
         FileInputStream in = null;
         try {
             in = new FileInputStream( file );
             in.read( byteData );
 
-
             encodePcmToMp3(byteData);
-
             //SAVE IN FIREBASE
-            Uri abc = Uri.fromFile(file);
-            //uploadFile(abc);
-            File f1 = new File("/sdcard/DSTRecord.pcm"); // The location of your PCM file
-            File f2 = new File("/sdcard/DSTRecord.wav"); // The location where you want your WAV file
-            try {
-                rawToWave(f1, f2);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
-            String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date());
-            Uri file2 = Uri.fromFile(new File("/sdcard/DSTRecord.wav"));
-            StorageReference riversRef = mStorageRef.child(user.substring(0,index)+"/"+timeStamp+"_"+file2.getLastPathSegment());
-            mStorageTask = riversRef.putFile(file2);
-
-            // Register observers to listen for when the download is done or if it fails
-            mStorageTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle unsuccessful uploads
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                    // ...
-                }
-            });
 
 
             in.close();
@@ -329,6 +315,39 @@ public class RecordAudioActivity extends AppCompatActivity {
             Log.d(TAG, "audio track is not initialised ");
 
     }
+
+
+    private void savingRecording(String filePath) throws IOException{
+        
+        //uploadFile(abc);
+        File f1 = new File("/sdcard/DSTRecord.pcm"); // The location of your PCM file
+        File f2 = new File("/sdcard/DSTRecord.wav"); // The location where you want your WAV file
+        try {
+            rawToWave(f1, f2);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date());
+        Uri file2 = Uri.fromFile(new File("/sdcard/DSTRecord.wav"));
+        StorageReference riversRef = mStorageRef.child(user.substring(0,index)+"/"+timeStamp+"_"+file2.getLastPathSegment());
+        mStorageTask = riversRef.putFile(file2);
+
+        // Register observers to listen for when the download is done or if it fails
+        mStorageTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+            }
+        });
+    }
+
 
     public void encodePcmToMp3(byte[] pcm) {
 //        LameEncoder encoder = new LameEncoder(new javax.sound.sampled.AudioFormat(44100.0f, 16, 2, true, false), 256, MPEGMode.STEREO, Lame.QUALITY_HIGHEST, false);
