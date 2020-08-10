@@ -3,7 +3,10 @@ package com.dnpa.finalproject.depressionsafetytracking.Location;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -12,7 +15,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dnpa.finalproject.depressionsafetytracking.Login.LoginActivity;
+import com.dnpa.finalproject.depressionsafetytracking.Login.RegisterActivity;
 import com.dnpa.finalproject.depressionsafetytracking.R;
+import com.dnpa.finalproject.depressionsafetytracking.View.TrackingView;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -49,13 +55,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Button btnAccept;
     TextView titleTv, messageTv;
 
+    Button mBackBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maps_activity);
 
-
         myDialog = new Dialog(this);
+        mBackBtn = (Button)findViewById(R.id.back);
 
         user =getIntent().getStringExtra("USER");
         index = getIntent().getIntExtra("INDEX",0);
@@ -65,12 +73,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+
         //show message
         showMessage();
 
 
         //se instancia la BD
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        mBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+
+            }
+        });
     }
 
     /**
@@ -85,9 +102,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-
-
 
         //direeccionar a la bd
         //cada vez que cambien los valores poner puntos en el mapa
@@ -115,22 +129,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 realTimeMarkers.clear();
                 realTimeMarkers.addAll(tmpRealTimeMarkers);
 
-                //Auto Zoom to MAP MARKERS
-                LatLngBounds.Builder builder = new LatLngBounds.Builder();
-                for (Marker marker : tmpRealTimeMarkers) {
-                    builder.include(marker.getPosition());
+
+                // checking if polylineList is Empty or not
+                if (!realTimeMarkers.isEmpty()) {
+
+                    //Auto Zoom to MAP MARKERS
+                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                    for (Marker marker : tmpRealTimeMarkers) {
+                        builder.include(marker.getPosition());
+                    }
+                    LatLngBounds bounds = builder.build();
+                    int padding = 0; // offset from edges of the map in pixels
+                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                    //mMap.moveCamera(cu);
+                    mMap.animateCamera(cu);
                 }
-                LatLngBounds bounds = builder.build();
-                int padding = 0; // offset from edges of the map in pixels
-                CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
-                //mMap.moveCamera(cu);
-                mMap.animateCamera(cu);
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
 
@@ -161,4 +179,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         myDialog.show();
     }
+
+
 }

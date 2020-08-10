@@ -284,7 +284,6 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
         }
     }
 
-
     public void hideView(View view) {
         ToggleButton toggleButton = (ToggleButton) view;
             if (toggleButton.isChecked()) {

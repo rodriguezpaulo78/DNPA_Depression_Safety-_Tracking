@@ -24,11 +24,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.XYPlot;
@@ -58,10 +60,16 @@ public class ShowMovementActivity extends AppCompatActivity {
     public String user;
     public int index;
 
+    Button mBackBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.movement_activity);
+
+        mBackBtn = (Button)findViewById(R.id.back);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Movement Tracking");
 
         user =getIntent().getStringExtra("USER");
         index = getIntent().getIntExtra("INDEX",0);
@@ -86,6 +94,14 @@ public class ShowMovementActivity extends AppCompatActivity {
         xyPlot.setBorderPaint(null);
         xyPlot.disableAllMarkup();
         xyPlot.setRangeBoundaries(-10, 10, BoundaryMode.FIXED);
+
+
+        mBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.dnpa.finalproject.depressionsafetytracking.AudioRecord;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
@@ -83,6 +84,7 @@ public class RecordAudioActivity extends AppCompatActivity {
 
     public String user;
     public int index;
+    Button mBackBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +93,10 @@ public class RecordAudioActivity extends AppCompatActivity {
 
         user =getIntent().getStringExtra("USER");
         index = getIntent().getIntExtra("INDEX",0);
+
+        mBackBtn = (Button)findViewById(R.id.back);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Audio Recording");
 
         btnStart= findViewById(R.id.btnStart);
         btnStop= findViewById(R.id.btnStop);
@@ -138,6 +144,13 @@ public class RecordAudioActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     // make something
                 }
+            }
+        });
+
+        mBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
             }
         });
 

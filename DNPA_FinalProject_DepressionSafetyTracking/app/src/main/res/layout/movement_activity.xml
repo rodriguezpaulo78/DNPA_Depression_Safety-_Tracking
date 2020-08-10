@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/background">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
     <RadioGroup android:id="@+id/sensorSelector" 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,21 +28,69 @@
             android:onClick="onSensorSelectorClick" />
 
     </RadioGroup>
-    
-    <ToggleButton android:id="@+id/readAccelerationDataToggleButton"
-        android:layout_width="match_parent"
+
+    <TextView
+        android:id="@+id/orientationLabel"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="Orientacion del dispositivo"
+
+        android:textSize="20sp" />
+
+    <ImageView
+        android:layout_width="125dp"
+        android:layout_height="147dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="-50dp"
+        android:paddingBottom="50dp"
+        android:src="@drawable/ic_caminar" />
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_gravity="left"
+        android:layout_marginTop="40dp"
+        android:text="Movement Tracking PLOT"
+        android:textSize="16sp" />
+
+
+    <com.androidplot.xy.XYPlot
+        android:id="@+id/XYPlot"
+        title="Acceleration Plot"
+        android:layout_width="367dp"
+        android:layout_height="275dp"
+        android:layout_above="@id/readAccelerationDataToggleButton"
+        android:layout_below="@id/sensorSelector"
+        android:layout_gravity="center"
+        android:padding="50dp" />
+
+    <ToggleButton android:id="@+id/readAccelerationDataToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:padding="10dp"
         android:checked="false"
+        android:background="#FFC107"
         android:layout_alignParentBottom="true"
         android:textOn="Leyendo Datos del Acelerometro"
         android:textOff="Empezar Lectura de Datos de Aceleracion"
         android:onClick="onReadAccelerationDataToggleButtonClicked" />
-    
-    <com.androidplot.xy.XYPlot android:id="@+id/XYPlot"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        title="Acceleration Plot"
-        android:layout_below="@id/sensorSelector"
-        android:layout_above="@id/readAccelerationDataToggleButton"/>
 
-</RelativeLayout>
+    <Button
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Volver al Menu Principal"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:background="#3F51B5"
+        android:textColor="@color/colorWhite" />
+
+</LinearLayout>
