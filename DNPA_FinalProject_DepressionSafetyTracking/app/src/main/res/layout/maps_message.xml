@@ -18,7 +18,6 @@
         android:elevation="5dp"
         android:layout_alignParentRight="true"/>
 
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,74 +27,72 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" >
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="25dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/titleAbout"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:text="Maps Fragment"
-                android:textColor="@color/colorBlack"
-                android:textAlignment="center"
-                android:textSize="25dp"
-                android:textStyle="bold" />
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp"
+                android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:src="@drawable/ic_location"/>
+                <TextView
+                    android:id="@+id/titleAbout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="Maps Fragment"
+                    android:textColor="@color/colorBlack"
+                    android:textAlignment="center"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/messageAbout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="20dp"
-                android:textAlignment="gravity"
-                android:textSize="18dp"
-                android:textColor="@color/colorBlack"
-                android:text="Aqui encontrarás los puntos de ubicación guardados al momento de hacer el monitoreo" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/ic_location"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:text="Tu información está protegida"
-                android:textColor="@color/colorBlack"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/messageAbout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:textAlignment="gravity"
+                    android:textSize="18dp"
+                    android:textColor="@color/colorBlack"
+                    android:text="Aqui encontrarás los puntos de ubicación guardados al momento de hacer el monitoreo" />
 
-            <Button
-                android:id="@+id/btnAceptar"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="De Acuerdo"
-                android:textColor="@color/colorWhite"
-                android:background="@drawable/button_green_round"
-                android:layout_gravity="center_horizontal" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Tu información está protegida"
+                    android:textColor="@color/colorBlack"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
+                <Button
+                    android:id="@+id/btnAceptar"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="De Acuerdo"
+                    android:textColor="@color/colorWhite"
+                    android:background="@drawable/button_round"
+                    android:layout_gravity="center_horizontal" />
+
+            </LinearLayout>
         </LinearLayout>
-
-    </LinearLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

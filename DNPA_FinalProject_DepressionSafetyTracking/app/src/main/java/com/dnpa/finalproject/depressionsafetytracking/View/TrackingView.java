@@ -7,7 +7,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -33,19 +32,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
 import com.bumptech.glide.Glide;
 import com.dnpa.finalproject.depressionsafetytracking.AudioRecord.RecordAudioActivity;
 import com.dnpa.finalproject.depressionsafetytracking.Location.LocationReceiver;
 import com.dnpa.finalproject.depressionsafetytracking.Location.MapsActivity;
-import com.dnpa.finalproject.depressionsafetytracking.Login.LoginActivity;
 import com.dnpa.finalproject.depressionsafetytracking.Movement.ShowMovementActivity;
 import com.dnpa.finalproject.depressionsafetytracking.Presenter.ITrackingPresenter;
 import com.dnpa.finalproject.depressionsafetytracking.Presenter.TrackingPresenter;
 import com.dnpa.finalproject.depressionsafetytracking.R;
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -55,13 +50,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class TrackingView extends AppCompatActivity implements ITrackingView, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener{
 
-    private int MY_PERMISSIONS_REQUEST_READ_CONTACTS;
     private ITrackingPresenter presenter;
-
-    Handler handler = new Handler();
-    Runnable runnable;
-    int delay = 3*1000; //Delay for 15 seconds.  One second = 1000 milliseconds.
-
+    private int MY_PERMISSIONS_REQUEST_READ_CONTACTS;
     private final static long ACC_CHECK_INTERVAL = 3000;
     private long lastAccCheck;
 
@@ -233,17 +223,11 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
                 presenter.updateSelectedSensor(sensorManager);
                 presenter.uploadLastLocation(this, fusedLocationClient);
 
-                handler.postDelayed( runnable = new Runnable() {
-                    public void run() {
-                        //do something
-                        Log.e("", "LLAMANDO METODO CADA 3 SEGUNDOS ");
-                        handler.postDelayed(runnable, delay);
-                    }
-                }, delay);
+
             } else {
                 presenter.stopReadingData();
                 presenter.stopSelectedSensor(sensorManager);
-                handler.removeCallbacks(runnable); //stop handler when activity not visible
+
 
             }
         }else{

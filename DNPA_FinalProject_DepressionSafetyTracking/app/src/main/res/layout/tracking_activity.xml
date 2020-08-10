@@ -40,55 +40,54 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/orientationLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Orientacion del dispositivo"
-            android:textSize="20sp" />
+            <TextView
+                android:id="@+id/orientationLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Orientacion del dispositivo"
+                android:textSize="20sp" />
 
-        <TextView android:id="@+id/orientationValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            <TextView android:id="@+id/orientationValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
-        <TextView
-            android:id="@+id/sensorXLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Ultimo Valor X " />
+            <TextView
+                android:id="@+id/sensorXLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Ultimo Valor X " />
 
-        <TextView android:id="@+id/sensorXValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
+            <TextView android:id="@+id/sensorXValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
 
-        <TextView
-            android:id="@+id/sensorYLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Ultimo Valor Y " />
+            <TextView
+                android:id="@+id/sensorYLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Ultimo Valor Y " />
 
-        <TextView android:id="@+id/sensorYValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
+            <TextView android:id="@+id/sensorYValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
 
-        <TextView
-            android:id="@+id/sensorZLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Ultimo Valor Z " />
+            <TextView
+                android:id="@+id/sensorZLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Ultimo Valor Z " />
 
-        <TextView android:id="@+id/sensorZValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
-
+            <TextView android:id="@+id/sensorZValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
         </LinearLayout>
 
         <LinearLayout
@@ -101,35 +100,31 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_gravity="center">
-
                 <Button
                     android:id="@+id/lastLocationsButton"
                     android:layout_width="170dp"
                     android:layout_height="120dp"
                     android:drawableTop="@drawable/ic_ubicacion"
                     android:text="VER REGISTRO UBICACIONES" />
-
                 <Button
                     android:id="@+id/movementButton"
                     android:layout_width="170dp"
                     android:layout_height="120dp"
                     android:drawableTop="@drawable/ic_caminar"
                     android:text="VER MONITOREO MOVIMIENTO" />
-
             </TableRow>
+
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_gravity="center">
-
                 <Button
                     android:id="@+id/audioButton"
                     android:layout_width="170dp"
                     android:layout_height="120dp"
                     android:drawableTop="@drawable/ic_podcast"
                     android:text="GRABAR AUDIO" />
-
                 <ToggleButton
                     android:id="@+id/showButton"
                     android:layout_width="170dp"
@@ -139,14 +134,12 @@
                     android:textOff="OCULTAR DATOS MONITOREO"
                     android:checked="false"
                     android:onClick="hideView"/>
-
             </TableRow>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
                 <ToggleButton
                     android:id="@+id/trackingButton"
                     android:layout_width="wrap_content"
@@ -160,13 +153,8 @@
                     android:onClick="startTracking"
                     android:background="#FFC107"
                     android:padding="10dp"/>
-
             </LinearLayout>
-
         </LinearLayout>
-
-
-
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -177,6 +165,4 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/drawer_menu" />
-
-
 </androidx.drawerlayout.widget.DrawerLayout>

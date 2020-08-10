@@ -26,7 +26,6 @@
             android:text="Acelerometro"
             android:checked="true"
             android:onClick="onSensorSelectorClick" />
-
     </RadioGroup>
 
     <TextView
@@ -36,7 +35,6 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:text="Orientacion del dispositivo"
-
         android:textSize="20sp" />
 
     <ImageView
@@ -47,8 +45,6 @@
         android:paddingBottom="50dp"
         android:src="@drawable/ic_caminar" />
 
-
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,7 +53,6 @@
         android:layout_marginTop="40dp"
         android:text="Movement Tracking PLOT"
         android:textSize="16sp" />
-
 
     <com.androidplot.xy.XYPlot
         android:id="@+id/XYPlot"
@@ -92,5 +87,4 @@
         android:layout_marginTop="20dp"
         android:background="#3F51B5"
         android:textColor="@color/colorWhite" />
-
 </LinearLayout>

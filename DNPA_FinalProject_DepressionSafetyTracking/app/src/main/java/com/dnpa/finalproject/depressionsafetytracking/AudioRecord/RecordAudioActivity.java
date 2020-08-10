@@ -4,10 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
-import android.app.ProgressDialog;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
@@ -17,29 +14,22 @@ import android.media.AudioTrack;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.dnpa.finalproject.depressionsafetytracking.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
-
 import net.sourceforge.lame.lowlevel.LameEncoder;
 import net.sourceforge.lame.mp3.Lame;
 import net.sourceforge.lame.mp3.MPEGMode;
-
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -52,8 +42,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class RecordAudioActivity extends AppCompatActivity {
 
@@ -71,7 +59,6 @@ public class RecordAudioActivity extends AppCompatActivity {
     private Thread recordingThread = null;
     private boolean isRecording = false;
     private Button btnStart, btnStop, btnPlay, btnSave;
-
 
     //uri to store file
     private Uri filePath;
@@ -103,7 +90,7 @@ public class RecordAudioActivity extends AppCompatActivity {
         btnPlay= findViewById(R.id.btnPlay);
         btnSave= findViewById(R.id.btnSend);
         mStorageRef = FirebaseStorage.getInstance().getReference();
-        // Create a reference to "mountains.jpg"
+        // Create a reference to "DSTRecord.pcm"
         mountainsRef = mStorageRef.child("/sdcard/DSTRecord.pcm");
         btnStop.setEnabled(false);
         btnPlay.setEnabled(false);
@@ -169,29 +156,6 @@ public class RecordAudioActivity extends AppCompatActivity {
                 }
             }
         });
-
-        //PERMISSIONS HANDLING
-        int PERMISSION_ALL = 1;
-        String[] PERMISSIONS = {
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.RECORD_AUDIO
-        };
-
-        if (!hasPermissions(this, PERMISSIONS)) {
-            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
-        }
-    }
-
-    //¿Se tienen los permisos?
-    public static boolean hasPermissions(Context context, String... permissions) {
-        if (context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
     // onClick of backbutton finishes the activity.
@@ -251,14 +215,11 @@ public class RecordAudioActivity extends AppCompatActivity {
             }
         }
 
-
-
         try {
             os.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private void stopRecording() throws IOException {
@@ -289,10 +250,6 @@ public class RecordAudioActivity extends AppCompatActivity {
             in.read( byteData );
 
             encodePcmToMp3(byteData);
-            //SAVE IN FIREBASE
-
-
-
             in.close();
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
@@ -308,18 +265,14 @@ public class RecordAudioActivity extends AppCompatActivity {
             // Write the byte array to the track
             at.write(byteData, 0, byteData.length);
             at.stop();
-
             at.release();
-        }
-        else
+        } else {
             Log.d(TAG, "audio track is not initialised ");
-
+        }
     }
 
 
     private void savingRecording(String filePath) throws IOException{
-        
-        //uploadFile(abc);
         File f1 = new File("/sdcard/DSTRecord.pcm"); // The location of your PCM file
         File f2 = new File("/sdcard/DSTRecord.wav"); // The location where you want your WAV file
         try {
@@ -343,16 +296,12 @@ public class RecordAudioActivity extends AppCompatActivity {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
             }
         });
     }
 
 
     public void encodePcmToMp3(byte[] pcm) {
-//        LameEncoder encoder = new LameEncoder(new javax.sound.sampled.AudioFormat(44100.0f, 16, 2, true, false), 256, MPEGMode.STEREO, Lame.QUALITY_HIGHEST, false);
-
-        //fast  gmm2  LameEncoder encoder = new LameEncoder(new javax.sound.sampled.AudioFormat(88200.0f, 16, 2, true, false), 256, MPEGMode.STEREO, Lame.QUALITY_HIGHEST, false);
         Log.d(TAG, "laptm3" + (int) pcm.length+"");
         LameEncoder encoder = new LameEncoder(new javax.sound.sampled.AudioFormat(8000.0f, 16, 1, true, false), 256, MPEGMode.STEREO, Lame.QUALITY_HIGHEST, false);
 
@@ -390,15 +339,10 @@ public class RecordAudioActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
-        //   return mp3.toByteArray();
     }
 
-
-
     private void rawToWave(final File rawFile, final File waveFile) throws IOException {
-
         byte[] rawData = new byte[(int) rawFile.length()];
         DataInputStream input = null;
         try {
@@ -443,6 +387,7 @@ public class RecordAudioActivity extends AppCompatActivity {
             }
         }
     }
+
     byte[] fullyReadFileToBytes(File f) throws IOException {
         int size = (int) f.length();
         byte bytes[] = new byte[size];
@@ -464,9 +409,9 @@ public class RecordAudioActivity extends AppCompatActivity {
         } finally {
             fis.close();
         }
-
         return bytes;
     }
+
     private void writeInt(final DataOutputStream output, final int value) throws IOException {
         output.write(value >> 0);
         output.write(value >> 8);
@@ -484,6 +429,4 @@ public class RecordAudioActivity extends AppCompatActivity {
             output.write(value.charAt(i));
         }
     }
-
-
 }

@@ -33,52 +33,44 @@
         android:paddingBottom="50dp"
         android:src="@drawable/ic_podcast" />
 
-
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginTop="30dp"
         android:layout_gravity="center">
-
         <Button
             android:id="@+id/btnStart"
             android:layout_width="170dp"
             android:layout_height="120dp"
             android:drawableTop="@drawable/ic_recordaudio"
             android:text="Iniciar Grabacion" />
-
-
         <Button
             android:id="@+id/btnStop"
             android:layout_width="170dp"
             android:layout_height="120dp"
             android:drawableTop="@drawable/ic_stop"
             android:text="Detener Grabacion" />
-
     </TableRow>
+
     <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_gravity="center">
-
         <Button
             android:id="@+id/btnPlay"
             android:layout_width="170dp"
             android:layout_height="120dp"
             android:drawableTop="@drawable/ic_play"
             android:text="Reproducir Audio" />
-
         <Button
             android:id="@+id/btnSend"
             android:layout_width="170dp"
             android:layout_height="120dp"
             android:drawableTop="@drawable/ic_save"
             android:text="Guardar en BD" />
-
     </TableRow>
-
 
     <Button
         android:id="@+id/back"
@@ -90,6 +82,4 @@
         android:layout_marginTop="20dp"
         android:background="#3F51B5"
         android:textColor="@color/colorWhite" />
-
-
 </LinearLayout>

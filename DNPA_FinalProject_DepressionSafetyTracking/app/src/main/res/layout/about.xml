@@ -89,12 +89,11 @@
                     android:layout_marginTop="20dp"
                     android:text="De Acuerdo"
                     android:textColor="@color/colorWhite"
-                    android:background="@drawable/button_green_round"
+                    android:background="@drawable/button_round"
                     android:layout_gravity="center_horizontal" />
 
             </LinearLayout>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 </RelativeLayout>

@@ -18,9 +18,11 @@ class User {
     public String getDisplayname(){
         return Displayname;
     }
+
     public String getEmail(){
         return Email;
     }
+
     public long getCreatedAt(){
         return createdAt;
     }

@@ -2,7 +2,6 @@ package com.dnpa.finalproject.depressionsafetytracking.Splash;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Pair;
@@ -12,18 +11,13 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.dnpa.finalproject.depressionsafetytracking.Login.LoginActivity;
 import com.dnpa.finalproject.depressionsafetytracking.R;
-import com.dnpa.finalproject.depressionsafetytracking.View.TrackingView;
 
 public class SplashScreenView extends AppCompatActivity {
 
-    //Duracion SPLASH
-    private final int SPLASH_DURATION = 2500;
-
+    private final int SPLASH_DURATION = 2500;   //SPLASH Duration (MS)
     Animation topAnim;
     ImageView image;
     TextView logo, slogan;
@@ -34,12 +28,10 @@ public class SplashScreenView extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.splash_activity);
 
-        topAnim = AnimationUtils.loadAnimation(this,R.anim.top_animation);
-
+        topAnim = AnimationUtils.loadAnimation(this,R.anim.animation);
         image = findViewById(R.id.imageView);
         logo = findViewById(R.id.textView);
         slogan = findViewById(R.id.textView2);
-
         image.setAnimation(topAnim);
         logo.setAnimation(topAnim);
         slogan.setAnimation(topAnim);
@@ -52,8 +44,7 @@ public class SplashScreenView extends AppCompatActivity {
                 pairs[0]=new Pair<View, String>(image,"logo_image");
                 pairs[1]=new Pair<View, String>(logo,"logo_text");
                 //wrap the call in API level 21 or higher
-                if(android.os.Build.VERSION.SDK_INT>=android.os.Build.VERSION_CODES.LOLLIPOP)
-                {
+                if(android.os.Build.VERSION.SDK_INT>=android.os.Build.VERSION_CODES.LOLLIPOP) {
                     ActivityOptions options=ActivityOptions.makeSceneTransitionAnimation(SplashScreenView.this,pairs);
                     startActivity(intent,options.toBundle());
                 }

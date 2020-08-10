@@ -1,10 +1,7 @@
 package com.dnpa.finalproject.depressionsafetytracking.Presenter;
 
 import android.hardware.SensorManager;
-import android.os.Handler;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.dnpa.finalproject.depressionsafetytracking.View.ITrackingView;
 import com.dnpa.finalproject.depressionsafetytracking.Model.ITrackingModel;
 import com.dnpa.finalproject.depressionsafetytracking.Model.TrackingModel;
@@ -15,17 +12,12 @@ public class TrackingPresenter implements ITrackingPresenter {
     private ITrackingView view;
     private ITrackingModel model;
 
-    Handler handler = new Handler();
-    Runnable runnable;
-    int delay = 3*1000; //Delay for 15 seconds.  One second = 1000 milliseconds.
-
-
     public TrackingPresenter(ITrackingView view) {
         this.view = view;
         model = new TrackingModel(this);
     }
 
-
+    //Llamada a métodos desarrollados en el modelo
     @Override
     public void showData(String x, String y, String z, String orientation) {
         if(view!=null){
@@ -37,7 +29,6 @@ public class TrackingPresenter implements ITrackingPresenter {
     @Override
     public void startReadingData(String x) {
         if(view!=null){
-            //Llama al método desarrollado en el modelo
             model.startReadingData(x);
         }
     }
@@ -45,7 +36,6 @@ public class TrackingPresenter implements ITrackingPresenter {
     @Override
     public void stopReadingData() {
         if(view!=null){
-            //Llama al método desarrollado en el modelo
             model.stopReadingData();
         }
     }
@@ -53,7 +43,6 @@ public class TrackingPresenter implements ITrackingPresenter {
     @Override
     public void updateSelectedSensor(SensorManager sensorManager) {
         if(view!=null) {
-            //Llama al método desarrollado en el modelo
             model.updateSelectedSensor(sensorManager);
         }
     }
@@ -61,7 +50,6 @@ public class TrackingPresenter implements ITrackingPresenter {
     @Override
     public void stopSelectedSensor(SensorManager sensorManager) {
         if(view!=null) {
-            //Llama al método desarrollado en el modelo
             model.stopSelectedSensor(sensorManager);
         }
     }
@@ -69,7 +57,6 @@ public class TrackingPresenter implements ITrackingPresenter {
     @Override
     public void uploadLastLocation(AppCompatActivity act, FusedLocationProviderClient fusedLocationClient) {
         if(view!=null) {
-            //Llama al método desarrollado en el modelo
             model.uploadLastLocation(act, fusedLocationClient);
         }
     }
