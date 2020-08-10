@@ -7,11 +7,10 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 
-import com.androidplot.xy.SimpleXYSeries;
+import com.dnpa.finalproject.depressionsafetytracking.ErrorProcessing.FilteringData;
 import com.dnpa.finalproject.depressionsafetytracking.Presenter.ITrackingPresenter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,15 +24,19 @@ public class OrientationEventListener implements SensorEventListener {
     private float[] magneticValues;
     String ZValue, YValue, XValue;
     private boolean isFaceUp;
-    String x=null,y=null,z=null,orientation=null;
+    String orientation=null;
 
     //FIREBASE
     DatabaseReference mDatabase;
     Map<String,Object> dbValues = new HashMap<>();
 
+    private FilteringData filter;
+
+
     public OrientationEventListener(ITrackingPresenter presenter, String user){
         this.presenter = presenter;
         this.user = user;
+        filter=new FilteringData();
     }
 
     @Override
@@ -92,6 +95,10 @@ public class OrientationEventListener implements SensorEventListener {
      */
     private void determineOrientation(float[] rotationMatrix) {
         float[] orientationValues = new float[3];
+
+        //APLICANDO FILTRO PASO ALTO
+        orientationValues = filter.highPass(orientationValues[0], orientationValues[1], orientationValues[2],0.8f);
+
         SensorManager.getOrientation(rotationMatrix, orientationValues);
 
         double azimuth = Math.toDegrees(orientationValues[0]);
@@ -100,10 +107,6 @@ public class OrientationEventListener implements SensorEventListener {
         ZValue = String.valueOf(azimuth);
         XValue = String.valueOf(pitch);
         YValue = String.valueOf(roll);
-
-        x=(String.valueOf(azimuth));
-        y=(String.valueOf(pitch));
-        z=(String.valueOf(roll));
 
         Map<String,Object> xyzValues = new HashMap<>();
         mDatabase = FirebaseDatabase.getInstance().getReference();

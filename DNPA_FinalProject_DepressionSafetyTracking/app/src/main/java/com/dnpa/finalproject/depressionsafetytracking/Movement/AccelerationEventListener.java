@@ -1,18 +1,3 @@
-/*
- * Copyright 2012 Greg Milette and Adam Stroud
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- * 		http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.dnpa.finalproject.depressionsafetytracking.Movement;
 
 import android.annotation.SuppressLint;
@@ -21,21 +6,14 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.os.SystemClock;
-import android.speech.tts.TextToSpeech;
 import android.util.Log;
-
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.LineAndPointRenderer;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
+import com.dnpa.finalproject.depressionsafetytracking.ErrorProcessing.FilteringData;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +39,8 @@ public class AccelerationEventListener implements SensorEventListener {
     private String user;
     private int i;
 
+    private FilteringData filter;
+
     //BD Firebase
     DatabaseReference mDatabase;
     Map<String,Object> dbValues = new HashMap<>();
@@ -68,6 +48,7 @@ public class AccelerationEventListener implements SensorEventListener {
     public AccelerationEventListener(XYPlot xyPlot, boolean useHighPassFilter, String a, int index) {
         user= a;
         i=index;
+        filter=new FilteringData();
 
         this.xyPlot = xyPlot;
         this.useHighPassFilter = useHighPassFilter;
@@ -112,7 +93,8 @@ public class AccelerationEventListener implements SensorEventListener {
 
         // Pasa los valores usando el filtro de paso alto
         if (useHighPassFilter) {
-            values = highPass(values[0], values[1], values[2]);
+            //values = highPass(values[0], values[1], values[2]);
+            values = filter.highPass(values[0], values[1], values[2],0.8f);
         }
 
         if (!useHighPassFilter || (++highPassCount >= HIGH_PASS_MINIMUM)) {
@@ -136,7 +118,7 @@ public class AccelerationEventListener implements SensorEventListener {
                     addDataPoint(yAxisSeries, timestamp, values[1]);
                     addDataPoint(zAxisSeries, timestamp, values[2]);
                     addDataPoint(accelerationSeries, timestamp, acceleration);
-                    
+
                     xyPlot.redraw();
                     lastChartRefresh = current;
                 }
@@ -151,31 +133,9 @@ public class AccelerationEventListener implements SensorEventListener {
         series.addLast(timestamp, value);
     }
 
-    /**
-     * MÉTODO encargado del filtrado
-     */
-    private float[] highPass(float x, float y, float z) {
-        float[] filteredValues = new float[3];
-        
-        gravity[0] = ALPHA * gravity[0] + (1 - ALPHA) * x;
-        gravity[1] = ALPHA * gravity[1] + (1 - ALPHA) * y;
-        gravity[2] = ALPHA * gravity[2] + (1 - ALPHA) * z;
-        filteredValues[0] = x - gravity[0];
-        filteredValues[1] = y - gravity[1];
-        filteredValues[2] = z - gravity[2];
-        
-        return filteredValues;
-    }
-
-    //Método encargado de calcular la aceleración total en caso se requiera
-    private double totalaceleration(float x, float y, float z) {
-        double totalaceleration = Math.sqrt(Math.pow(x,2)+Math.pow(y,2)+Math.pow(z,2));
-        return totalaceleration;
-    }
-
+    @SuppressLint("LongLogTag")
     @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy)
-    {
-        // no-op
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        Log.d(TAG, String.format("Accuracy for sensor %s = %d", sensor.getName(), accuracy));
     }
 }

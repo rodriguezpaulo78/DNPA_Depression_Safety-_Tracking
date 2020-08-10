@@ -73,8 +73,8 @@
         android:checked="false"
         android:background="#FFC107"
         android:layout_alignParentBottom="true"
-        android:textOn="Leyendo Datos del Acelerometro"
-        android:textOff="Empezar Lectura de Datos de Aceleracion"
+        android:textOn="Detener Movement Tracking"
+        android:textOff="Start Movement Tracking"
         android:onClick="onReadAccelerationDataToggleButtonClicked" />
 
     <Button
