@@ -130,12 +130,16 @@
                     android:drawableTop="@drawable/ic_podcast"
                     android:text="GRABAR AUDIO" />
 
-                <Button
+                <ToggleButton
                     android:id="@+id/showButton"
                     android:layout_width="170dp"
                     android:layout_height="120dp"
                     android:drawableTop="@drawable/ic_estadistica"
-                    android:text="VER DATOS MONITOREO" />
+                    android:textOn="VER DATOS MONITOREO"
+                    android:textOff="OCULTAR DATOS MONITOREO"
+                    android:checked="false"
+                    android:onClick="hideView"/>
+
             </TableRow>
 
             <LinearLayout

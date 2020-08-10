@@ -76,10 +76,10 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
     AlertDialog alert = null;
 
     //ORIENTATION HANDLING
-    private TextView orientationValue;
-    private TextView sensorXValue;
-    private TextView sensorYValue;
-    private TextView sensorZValue;
+    private TextView orientationLabel, orientationValue;
+    private TextView sensorXLabel, sensorXValue;
+    private TextView sensorYLabel, sensorYValue;
+    private TextView sensorZLabel, sensorZValue;
     private SensorManager sensorManager;
 
     //Actualizar en Navigation Drawer
@@ -118,8 +118,12 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
         // Obtener referencia del sensor
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         orientationValue = (TextView) findViewById(R.id.orientationValue);
+        orientationLabel = (TextView) findViewById(R.id.orientationLabel);
+        sensorXLabel = (TextView) findViewById(R.id.sensorXLabel);
         sensorXValue = (TextView) findViewById(R.id.sensorXValue);
+        sensorYLabel = (TextView) findViewById(R.id.sensorYLabel);
         sensorYValue = (TextView) findViewById(R.id.sensorYValue);
+        sensorZLabel = (TextView) findViewById(R.id.sensorZLabel);
         sensorZValue = (TextView) findViewById(R.id.sensorZValue);
 
         //MOVEMENT HANDLING
@@ -273,11 +277,35 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
                 startActivity(audioIntent);
                 break;
             case R.id.showButton :
-                //Intent showIntent = new Intent(TrackingView.this, ShowTrackingData.class);
-                //startActivity(showIntent);
+                hideView(v);
                 break;
         }
     }
+
+
+    public void hideView(View view) {
+        ToggleButton toggleButton = (ToggleButton) view;
+            if (toggleButton.isChecked()) {
+                orientationLabel.setVisibility(View.INVISIBLE);
+                orientationValue.setVisibility(View.INVISIBLE);
+                sensorXLabel.setVisibility(View.INVISIBLE);
+                sensorXValue.setVisibility(View.INVISIBLE);
+                sensorYLabel.setVisibility(View.INVISIBLE);
+                sensorYValue.setVisibility(View.INVISIBLE);
+                sensorZLabel.setVisibility(View.INVISIBLE);
+                sensorZValue.setVisibility(View.INVISIBLE);
+            } else {
+                orientationLabel.setVisibility(View.VISIBLE);
+                orientationValue.setVisibility(View.VISIBLE);
+                sensorXLabel.setVisibility(View.VISIBLE);
+                sensorXValue.setVisibility(View.VISIBLE);
+                sensorYLabel.setVisibility(View.VISIBLE);
+                sensorYValue.setVisibility(View.VISIBLE);
+                sensorZLabel.setVisibility(View.VISIBLE);
+                sensorZValue.setVisibility(View.VISIBLE);
+            }
+    }
+
 
     //¿Se tienen los permisos?
     public static boolean hasPermissions(Context context, String... permissions) {
