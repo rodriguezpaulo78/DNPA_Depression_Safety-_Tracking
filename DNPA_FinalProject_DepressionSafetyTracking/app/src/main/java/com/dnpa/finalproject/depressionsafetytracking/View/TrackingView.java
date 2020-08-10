@@ -33,6 +33,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 import com.bumptech.glide.Glide;
 import com.dnpa.finalproject.depressionsafetytracking.AudioRecording.RecordAudioActivity;
+import com.dnpa.finalproject.depressionsafetytracking.ErrorProcessing.ErrorsHandling;
 import com.dnpa.finalproject.depressionsafetytracking.Location.LocationReceiver;
 import com.dnpa.finalproject.depressionsafetytracking.Location.MapsActivity;
 import com.dnpa.finalproject.depressionsafetytracking.Movement.ShowMovementActivity;
@@ -86,12 +87,13 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
 
     //LOGIN
     String EmailHolder;
-
+    //ERRROS HANDLING
+    private ErrorsHandling getErrors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         presenter = new TrackingPresenter(this);
-
+        getErrors = new ErrorsHandling(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tracking_activity);
 
@@ -125,18 +127,7 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
         showButton = findViewById(R.id.showButton);
         showButton.setOnClickListener(this);
 
-        //PERMISSIONS HANDLING
-        int PERMISSION_ALL = 1;
-        String[] PERMISSIONS = {
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.RECORD_AUDIO
-        };
-
-        if (!hasPermissions(this, PERMISSIONS)) {
-            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
-        }
+        getErrors.checkPermissions();
 
         //NAV BAR
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -160,7 +151,6 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
         if(savedInstanceState == null){
             navigationView.setCheckedItem(R.id.nav_home);
         }
-
         myDialog = new Dialog(this);
 
         //Datos de usuario
@@ -173,6 +163,7 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
             index = textToFirebase.indexOf('@');
         }
 
+        //Mensaje de confidencialidad
         showPermissions();
     }
 
@@ -202,37 +193,22 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
         orientationValue.setText(orientation);
     }
 
-    //Revisa que GPS este activado en el dispositivo para que lea correctamente datos
-    private boolean checkIfLocationOpened() {
-        String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
-        Log.e("", "Provider contains=> "+provider);
-        if (provider.contains("gps") || provider.contains("network")){
-            return true;
-        }
-        return false;
-    }
-
     //Llama a los métodos del presentador para iniciar monitoreo
     public void startTracking(View view) {
         ToggleButton toggleButton = (ToggleButton)view;
 
-        if (checkIfLocationOpened()){
+        if (getErrors.checkIfLocationOpened()){
             if (toggleButton.isChecked()) {
-                presenter.startReadingData(textToFirebase.substring(0,index));
+                presenter.sendUserData(textToFirebase.substring(0,index));
                 presenter.updateSelectedSensor(sensorManager);
                 presenter.uploadLastLocation(this, fusedLocationClient);
-
-
             } else {
-                presenter.stopReadingData();
                 presenter.stopSelectedSensor(sensorManager);
-
-
             }
         }else{
             Log.e("", "LLAMANDO METODO PARA ACTIVAR GPS ");
-            alertNoGps();
-
+            toggleButton.setChecked(false);
+            getErrors.alertNoGps();
         }
     }
 
@@ -290,38 +266,6 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
             }
     }
 
-
-    //¿Se tienen los permisos?
-    public static boolean hasPermissions(Context context, String... permissions) {
-        if (context != null && permissions != null) {
-            for (String permission : permissions) {
-                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    //Alerta por si el GPS no esta activado
-    private void alertNoGps() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("El sistema GPS esta desactivado, ¿Desea activarlo para realizar el monitoreo?")
-                .setCancelable(false)
-                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        dialog.cancel();
-                    }
-                });
-        alert = builder.create();
-        alert.show();
-    }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
@@ -347,12 +291,12 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
                 showAbout();
                 break;
             case R.id.nav_help:
-                showAbout();
+                //showAbout();
                 break;
             case R.id.nav_salir:
                 new AlertDialog.Builder(this)
                         .setTitle("Confirmación de Salida")
-                        .setMessage("Esta seguro de que desea salir de su sesion")
+                        .setMessage("Esta seguro de que desea cerrar sesion?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -369,6 +313,16 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void signOut(){
+        AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(TrackingView.this, "CERRASTE SESION OK", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
     }
 
     @Override
@@ -399,21 +353,18 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
         btnAccept = (Button) myDialog.findViewById(R.id.btnAceptar);
         titleTv = (TextView) myDialog.findViewById(R.id.titleAbout);
         messageTv = (TextView) myDialog.findViewById(R.id.messageAbout);
-
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 myDialog.dismiss();
             }
         });
-
         closeAboutImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 myDialog.dismiss();
             }
         });
-
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         myDialog.show();
     }
@@ -425,32 +376,21 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
         btnAccept = (Button) myDialog.findViewById(R.id.btnAceptar);
         titleTv = (TextView) myDialog.findViewById(R.id.titleAbout);
         messageTv = (TextView) myDialog.findViewById(R.id.messageAbout);
-
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 myDialog.dismiss();
             }
         });
-
         closeAboutImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 myDialog.dismiss();
             }
         });
-
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         myDialog.show();
     }
 
-    public void signOut(){
-        AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                Toast.makeText(TrackingView.this, "CERRASTE SESION OK", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
-    }
+
 }

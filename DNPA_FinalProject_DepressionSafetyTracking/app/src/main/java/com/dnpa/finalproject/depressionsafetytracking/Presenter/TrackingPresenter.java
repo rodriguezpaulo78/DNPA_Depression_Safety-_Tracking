@@ -27,16 +27,9 @@ public class TrackingPresenter implements ITrackingPresenter {
     }
 
     @Override
-    public void startReadingData(String x) {
+    public void sendUserData(String x) {
         if(view!=null){
-            model.startReadingData(x);
-        }
-    }
-
-    @Override
-    public void stopReadingData() {
-        if(view!=null){
-            model.stopReadingData();
+            model.sendUserData(x);
         }
     }
 

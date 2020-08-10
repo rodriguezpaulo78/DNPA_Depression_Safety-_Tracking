@@ -6,43 +6,26 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
-import android.media.MediaRecorder;
-import android.os.Build;
-import android.os.Handler;
 import android.util.Log;
-
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.dnpa.finalproject.depressionsafetytracking.Presenter.ITrackingPresenter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class TrackingModel implements ITrackingModel, SensorEventListener {
 
     private ITrackingPresenter presenter;
-    Handler handler = new Handler();
-    Runnable runnable;
-    int delay = 3*1000; //Delay for 15 seconds.  One second = 1000 milliseconds.
-
-    private final static long ACC_CHECK_INTERVAL = 3000;
-    private long lastAccCheck;
 
     //LOCATION HANDLING
     DatabaseReference mDatabase;
     Map<String,Object> dbValues = new HashMap<>();
 
     //ORIENTATION HANDLING
-    private static final String TAG = "DetermineOrientationActivity";
+    private static final String TAG = "Model";
     private static final int RATE = SensorManager.SENSOR_DELAY_NORMAL;
     private float[] accelerationValues;
     private float[] magneticValues;
@@ -55,25 +38,11 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
 
     public TrackingModel(ITrackingPresenter presenter){
         this.presenter = presenter;
-        lastAccCheck = System.currentTimeMillis();
-
     }
 
     @Override
-    public void startReadingData(String a) {
-        if (!readingAccelerationData) {
-            readingAccelerationData = true;
+    public void sendUserData(String a) {
             user = a;
-
-        }
-    }
-
-    @Override
-    public void stopReadingData() {
-        if (readingAccelerationData) {
-            readingAccelerationData = false;
-
-        }
     }
 
     @Override
@@ -97,11 +66,8 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
                 }
                 break;
         }
-
-
     }
 
-    @SuppressLint("LongLogTag")
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         Log.d(TAG, String.format("Accuracy for sensor %s = %d", sensor.getName(), accuracy));
@@ -135,7 +101,6 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
      */
     private void determineOrientation(float[] rotationMatrix) {
         float[] orientationValues = new float[3];
-
         SensorManager.getOrientation(rotationMatrix, orientationValues);
 
         double azimuth = Math.toDegrees(orientationValues[0]);
@@ -149,8 +114,6 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
         y=(String.valueOf(pitch));
         z=(String.valueOf(roll));
 
-
-
         Map<String,Object> xyzValues = new HashMap<>();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -159,7 +122,6 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
             if (Math.abs(roll) >= 170) {
                 onFaceDown();
                 writeData();
-
             } else if (Math.abs(roll) <= 10) {
                 onFaceUp();
                 writeData( );
@@ -176,9 +138,9 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
         dbValues.put("z (orient)", ZValue);
         mDatabase.child(user).push().setValue(dbValues);
         //mDatabase.removeValue(); //método para eliminar si hay muchos datos en BD
+
         //Llama al método del presentador para actualizar los valores
         presenter.showData(XValue,YValue,ZValue,orientation);
-
     }
 
     private void onFaceUp() {
@@ -213,6 +175,7 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
     public void stopSelectedSensor(SensorManager sensorManager) {
         // Limpiar algun registro realizado anteriormente
         sensorManager.unregisterListener(this);
+
         //Llama al método del presentador para actualizar los valores
         presenter.showData("","","","");
     }
@@ -229,7 +192,6 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
                         if (location != null) {
                             // Logic to handle location object
                             Log.e("Latitud:"+location.getLatitude(), "Longitud"+location.getLongitude());
-
                             //Guarda los valores en la BD
                             dbValues.put("latitud", location.getLatitude());
                             dbValues.put("longitud", location.getLongitude());
@@ -239,6 +201,4 @@ public class TrackingModel implements ITrackingModel, SensorEventListener {
                     }
                 });
     }
-
-
 }
