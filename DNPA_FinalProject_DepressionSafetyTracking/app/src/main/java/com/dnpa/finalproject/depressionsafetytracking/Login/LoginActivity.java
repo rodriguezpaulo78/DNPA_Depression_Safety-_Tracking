@@ -101,7 +101,6 @@ public class LoginActivity extends AppCompatActivity {
                 // Opening new user registration activity using intent on button click.
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
-
             }
         });
 

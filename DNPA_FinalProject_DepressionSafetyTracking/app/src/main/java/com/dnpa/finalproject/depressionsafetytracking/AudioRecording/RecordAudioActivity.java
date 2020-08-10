@@ -2,12 +2,19 @@ package com.dnpa.finalproject.depressionsafetytracking.AudioRecording;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.dnpa.finalproject.depressionsafetytracking.Login.LoginActivity;
+import com.dnpa.finalproject.depressionsafetytracking.Login.RegisterActivity;
 import com.dnpa.finalproject.depressionsafetytracking.R;
 
 public class RecordAudioActivity extends AppCompatActivity {
@@ -93,12 +100,27 @@ public class RecordAudioActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    Toast.makeText(getApplicationContext(), "Record saved in Firebase", Toast.LENGTH_SHORT).show();
-                    audioHandler.savingRecording();
-                } catch (Exception e) {
-                    Log.d(TAG, "Error in Saving Recording");
-                }
+                new AlertDialog.Builder(RecordAudioActivity.this)
+                        .setTitle("Confirmación")
+                        .setMessage("Esta seguro de que desea guardar esta grabacion?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try {
+                                    Toast.makeText(getApplicationContext(), "Record saved in Firebase", Toast.LENGTH_SHORT).show();
+                                    audioHandler.savingRecording();
+                                } catch (Exception e) {
+                                    Log.d(TAG, "Error in Saving Recording");
+                                }
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .show();
+
             }
         });
     }
