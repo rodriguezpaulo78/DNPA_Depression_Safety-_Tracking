@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/ic_location"/>
+                    android:src="@drawable/ic_proteger"/>
 
                 <TextView
                     android:id="@+id/messageAbout"
@@ -65,7 +65,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="20dp"
-                    android:textAlignment="gravity"
+                    android:textAlignment="center"
                     android:textSize="18dp"
                     android:textColor="@color/colorBlack"
                     android:text="Los datos recopilados en DepressionSafeyTracking han sido autorizados para su posterior tratamiento como objetivo de este análisis" />

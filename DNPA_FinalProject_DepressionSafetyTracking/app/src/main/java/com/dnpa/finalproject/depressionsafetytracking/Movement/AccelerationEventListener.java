@@ -78,6 +78,7 @@ public class AccelerationEventListener implements SensorEventListener {
         }
     }
 
+    //Manejo de lectura de datos del Sensor
     @SuppressLint("LongLogTag")
     @Override
     public void onSensorChanged(SensorEvent event){
@@ -126,6 +127,7 @@ public class AccelerationEventListener implements SensorEventListener {
         }
     }
 
+    //Adición de datos en el gráfico
     private void addDataPoint(SimpleXYSeries series, Number timestamp, Number value) {
         if (series.size() == MAX_SERIES_SIZE) {
             series.removeFirst();

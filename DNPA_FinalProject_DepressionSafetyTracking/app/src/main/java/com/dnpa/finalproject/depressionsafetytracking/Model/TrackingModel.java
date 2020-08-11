@@ -61,6 +61,7 @@ public class TrackingModel implements ITrackingModel {
         presenter.showData("","","","");
     }
 
+    //Guarda la ubicación obtenida en la Base de Datos Firebase
     @SuppressLint("MissingPermission")
     @Override
     public void uploadLastLocation(AppCompatActivity act, FusedLocationProviderClient fusedLocationClient) {

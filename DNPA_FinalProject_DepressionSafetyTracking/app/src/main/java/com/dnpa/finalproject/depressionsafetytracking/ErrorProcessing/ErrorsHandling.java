@@ -11,7 +11,6 @@ import android.provider.Settings;
 import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
-
 import com.dnpa.finalproject.depressionsafetytracking.View.TrackingView;
 
 public class ErrorsHandling {
@@ -28,11 +27,11 @@ public class ErrorsHandling {
     Context context;
     AlertDialog alert = null;
 
-
     public ErrorsHandling(Context c){
         context =c;
     }
 
+    //Verifica si la aplicacion tiene permisos
     public void checkPermissions(){
         if (!hasPermissions(context, PERMISSIONS)) {
             ActivityCompat.requestPermissions((Activity) context, PERMISSIONS, PERMISSION_ALL);

@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:text="Maps Fragment"
+                    android:text="Puntos Ubicacion"
                     android:textColor="@color/colorBlack"
                     android:textAlignment="center"
                     android:textSize="25dp"
@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/ic_location"/>
+                    android:src="@drawable/ic_mapa"/>
 
                 <TextView
                     android:id="@+id/messageAbout"
@@ -65,10 +65,10 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="20dp"
-                    android:textAlignment="gravity"
+                    android:textAlignment="center"
                     android:textSize="18dp"
                     android:textColor="@color/colorBlack"
-                    android:text="Aqui encontrarás los puntos de ubicación guardados al momento de hacer el monitoreo" />
+                    android:text="Aqui encontrarás los puntos de ubicación guardados al momento de realizar el monitoreo" />
 
                 <TextView
                     android:layout_width="match_parent"

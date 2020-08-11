@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
-        android:text="Grabacion de AudioRecord"
+        android:text="Audio/Voice Recording"
         android:textSize="20sp" />
 
     <ImageView
@@ -44,13 +44,13 @@
             android:layout_width="170dp"
             android:layout_height="120dp"
             android:drawableTop="@drawable/ic_recordaudio"
-            android:text="Iniciar Grabacion" />
+            android:text="Start Recording" />
         <Button
             android:id="@+id/btnStop"
             android:layout_width="170dp"
             android:layout_height="120dp"
             android:drawableTop="@drawable/ic_stop"
-            android:text="Detener Grabacion" />
+            android:text="Stop Recording" />
     </TableRow>
 
     <TableRow
@@ -63,13 +63,13 @@
             android:layout_width="170dp"
             android:layout_height="120dp"
             android:drawableTop="@drawable/ic_play"
-            android:text="Reproducir Audio" />
+            android:text="Play Recording" />
         <Button
             android:id="@+id/btnSend"
             android:layout_width="170dp"
             android:layout_height="120dp"
             android:drawableTop="@drawable/ic_save"
-            android:text="Guardar en BD" />
+            android:text="Save Recording" />
     </TableRow>
 
     <Button

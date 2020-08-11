@@ -33,6 +33,7 @@ public class UserToFirebase {
         mDialog = new ProgressDialog(c);
     }
 
+    //Guarda el usuario registrado en Firebase
     public void saveUserFirebase(){
         mDialog.setMessage("Creating User please wait...");
         mDialog.setCanceledOnTouchOutside(false);
@@ -50,7 +51,7 @@ public class UserToFirebase {
                 }else{
                     Log.d("ERROR: ", task.getException().toString());
                     mDialog.dismiss();
-                    Toast.makeText(context,"Error al crear usuario, revise los campos",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,"Error al crear usuario, revise los datos ingresados",Toast.LENGTH_SHORT).show();
                 }
             }
         });

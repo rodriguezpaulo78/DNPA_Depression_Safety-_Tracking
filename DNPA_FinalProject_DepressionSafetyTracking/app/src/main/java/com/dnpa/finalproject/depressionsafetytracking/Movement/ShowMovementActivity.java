@@ -123,6 +123,7 @@ public class ShowMovementActivity extends AppCompatActivity {
         }
     }
 
+    //Método que inicia con el monitoreo de datos de Movimiento
     @SuppressLint("LongLogTag")
     private void startReadingAccelerationData() {
         if (!readingAccelerationData) {
@@ -146,6 +147,7 @@ public class ShowMovementActivity extends AppCompatActivity {
         }
     }
 
+    //Método que detiene el monitoreo de datos de Movimiento
     @SuppressLint("LongLogTag")
     private void stopReadingAccelerationData() {
         if (readingAccelerationData) {

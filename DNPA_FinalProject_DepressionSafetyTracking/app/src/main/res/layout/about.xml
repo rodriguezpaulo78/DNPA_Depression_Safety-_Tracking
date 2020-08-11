@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/ic_location"/>
+                    android:src="@drawable/ic_acerca_de"/>
 
                 <TextView
                     android:id="@+id/messageAbout"
@@ -76,7 +76,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="10dp"
-                    android:text="Esperamos una buena nota :c"
+                    android:text="Esperamos sea de su agrado"
                     android:textAlignment="center"
                     android:textSize="20sp"
                     android:textColor="@color/colorBlack"

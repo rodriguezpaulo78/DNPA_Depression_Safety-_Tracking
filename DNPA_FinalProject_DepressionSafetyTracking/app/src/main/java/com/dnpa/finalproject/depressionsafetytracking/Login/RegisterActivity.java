@@ -21,7 +21,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private UserToFirebase userSaver;
 
     //VIEW
-    EditText name,email,password;
+    EditText edtName, edtEmail, edtPassword;
     Button mRegisterBtn;
     CheckBox seePass;
     TextView mLoginPageBack;
@@ -33,9 +33,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.register_activity);
 
         //VIEW
-        name = (EditText)findViewById(R.id.editName);
-        email = (EditText)findViewById(R.id.editEmail);
-        password = (EditText)findViewById(R.id.editPassword);
+        edtName = (EditText)findViewById(R.id.editName);
+        edtEmail = (EditText)findViewById(R.id.editEmail);
+        edtPassword = (EditText)findViewById(R.id.editPassword);
         mRegisterBtn = (Button)findViewById(R.id.buttonRegister);
         mLoginPageBack = (TextView)findViewById(R.id.buttonLogin);
         seePass = (CheckBox) findViewById(R.id.seePassword);
@@ -43,40 +43,40 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         mLoginPageBack.setOnClickListener(this);
 
         //Control de EditText
-        name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        edtName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(name.getText().toString().isEmpty()){
+                if(edtName.getText().toString().isEmpty()){
                     if(hasFocus){
-                        name.setHint("");
+                        edtName.setHint("");
                     }else{
-                        name.setHint("Enter username");
+                        edtName.setHint("Enter username");
                     }
                 }
             }
         });
 
-        email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        edtEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(email.getText().toString().isEmpty()){
+                if(edtEmail.getText().toString().isEmpty()){
                     if(hasFocus){
-                        email.setHint("");
+                        edtEmail.setHint("");
                     }else{
-                        email.setHint("Enter e-mail");
+                        edtEmail.setHint("Enter e-mail");
                     }
                 }
             }
         });
 
-        password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        edtPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(password.getText().toString().isEmpty()){
+                if(edtPassword.getText().toString().isEmpty()){
                     if(hasFocus){
-                        password.setHint("");
+                        edtPassword.setHint("");
                     }else{
-                        password.setHint("Enter password");
+                        edtPassword.setHint("Enter password");
                     }
                 }
             }
@@ -87,9 +87,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(!isChecked){
-                    password.setTransformationMethod(new PasswordTransformationMethod());
+                    edtPassword.setTransformationMethod(new PasswordTransformationMethod());
                 } else{
-                    password.setTransformationMethod(null);
+                    edtPassword.setTransformationMethod(null);
                 }
             }
         });
@@ -121,9 +121,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     //Metodo registro usuario FIREBASE
     private void UserRegister() {
-        Name = name.getText().toString().trim();
-        Email = email.getText().toString().trim();
-        Password = password.getText().toString().trim();
+        Name = edtName.getText().toString().trim();
+        Email = edtEmail.getText().toString().trim();
+        Password = edtPassword.getText().toString().trim();
 
         if (TextUtils.isEmpty(Name)){
             Toast.makeText(RegisterActivity.this, "Enter Name", Toast.LENGTH_SHORT).show();
@@ -135,7 +135,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             Toast.makeText(RegisterActivity.this, "Enter Password", Toast.LENGTH_SHORT).show();
             return;
         }else if (Password.length()<6){
-            Toast.makeText(RegisterActivity.this,"Passwor must be greater then 6 digit",Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this,"Passwor must be greater than 6 digit",Toast.LENGTH_SHORT).show();
             return;
         }
 

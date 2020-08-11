@@ -10,7 +10,7 @@ public class FilteringData {
     }
 
     /**
-     * MÉTODO encargado del filtrado
+     * MÉTODO encargado del filtrado de datos usando un filtro de paso alto
      */
     public float[] highPass(float x, float y, float z, float alpha) {
         float[] filteredValues = new float[3];

@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Ultimo Valor X " />
+                android:text="Último Valor X " />
 
             <TextView android:id="@+id/sensorXValue"
                 android:layout_width="wrap_content"
@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Ultimo Valor Y " />
+                android:text="Último Valor Y " />
 
             <TextView android:id="@+id/sensorYValue"
                 android:layout_width="wrap_content"
@@ -82,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Ultimo Valor Z " />
+                android:text="Último Valor Z " />
 
             <TextView android:id="@+id/sensorZValue"
                 android:layout_width="wrap_content"
@@ -111,7 +111,7 @@
                     android:layout_width="170dp"
                     android:layout_height="120dp"
                     android:drawableTop="@drawable/ic_caminar"
-                    android:text="VER MONITOREO MOVIMIENTO" />
+                    android:text="MONITOREAR MOVIMIENTO" />
             </TableRow>
 
             <TableRow
@@ -130,7 +130,7 @@
                     android:layout_width="170dp"
                     android:layout_height="120dp"
                     android:drawableTop="@drawable/ic_estadistica"
-                    android:textOn="VER DATOS MONITOREO"
+                    android:textOn="MOSTRAR DATOS MONITOREO"
                     android:textOff="OCULTAR DATOS MONITOREO"
                     android:checked="false"
                     android:onClick="hideView"/>
@@ -146,8 +146,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
-                    android:textOn="PRESIONA PARA DETENER "
-                    android:textOff="PRESIONA PARA INICIAR "
+                    android:textOn="DETENER MONITOREO"
+                    android:textOff="INICIAR MONITOREO"
                     android:checked="false"
                     android:textSize="20dp"
                     android:onClick="startTracking"

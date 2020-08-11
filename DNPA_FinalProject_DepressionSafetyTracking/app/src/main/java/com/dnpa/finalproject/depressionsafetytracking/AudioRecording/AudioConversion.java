@@ -25,7 +25,7 @@ public class AudioConversion {
         this.filePath = filePath;
     }
 
-    //De bytes a mp3
+    //Transformacion de Bytes a .MP3
     public void encodePcmToMp3(byte[] pcm) {
         LameEncoder encoder = new LameEncoder(new javax.sound.sampled.AudioFormat(8000.0f, 16, 1, true, false), 256, MPEGMode.STEREO, Lame.QUALITY_HIGHEST, false);
         ByteArrayOutputStream mp3 = new ByteArrayOutputStream();
@@ -38,7 +38,7 @@ public class AudioConversion {
         while (0 < (bytesWritten = encoder.encodeBuffer(pcm, currentPcmPosition, bytesToTransfer, buffer))) {
             currentPcmPosition += bytesToTransfer;
             bytesToTransfer = Math.min(buffer.length, pcm.length - currentPcmPosition);
-            Log.e("logmessage", "current position: " + currentPcmPosition);
+            Log.e("LogMessage", "current position: " + currentPcmPosition);
             mp3.write(buffer, 0, bytesWritten);
         }
         encoder.close();
@@ -64,7 +64,7 @@ public class AudioConversion {
         }
     }
 
-    //de bytes a wav
+    //Transformacion de Bytes a .WAV
     public void rawToWave(final File rawFile, final File waveFile) throws IOException {
         byte[] rawData = new byte[(int) rawFile.length()];
         DataInputStream input = null;

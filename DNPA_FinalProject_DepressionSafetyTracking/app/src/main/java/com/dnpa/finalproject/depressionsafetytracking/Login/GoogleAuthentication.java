@@ -24,15 +24,15 @@ public class GoogleAuthentication {
     Context context;
     Button button;
     FirebaseAuth mAuth;
-    Activity ac;
+    Activity activity;
     //GOOGLE
     private GoogleSignInClient mGoogleSignInClient;
     private final static int RC_SIGN_IN = 123;
 
-    public GoogleAuthentication(Context c, Activity act, FirebaseAuth auth, Button b){
-        context = c;
+    public GoogleAuthentication(Context cont, Activity act, FirebaseAuth auth, Button b){
+        context = cont;
         button = b;
-        ac = act;
+        activity = act;
         createRequest();
         mAuth = auth;
         b.setOnClickListener(new View.OnClickListener() {
@@ -43,7 +43,7 @@ public class GoogleAuthentication {
         });
     }
 
-    //METodos GOOGLE AUTH
+    //Creacion de solicitud para Login en Google
     private void createRequest() {
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -52,18 +52,20 @@ public class GoogleAuthentication {
                 .build();
 
         // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(ac, gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(activity, gso);
     }
 
+    //Método de inicio de sesión a través de un intent
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        ac.startActivityForResult(signInIntent, RC_SIGN_IN);
+        activity.startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
+    //Autenticación via Firebase
     public void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(ac, new OnCompleteListener<AuthResult>() {
+                .addOnCompleteListener(activity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Intent i1 = new Intent (context, TrackingView.class);

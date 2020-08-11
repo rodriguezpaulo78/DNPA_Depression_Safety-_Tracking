@@ -184,6 +184,7 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
         unregisterReceiver(receiver);
     }
 
+    //Muestra los datos al usuario
     @Override
     public void showData(String x, String y, String z, String orientation) {
         //Log.d("Mensajes de entrada : "x+y+z+""+orientation);
@@ -243,6 +244,7 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
         }
     }
 
+    //Funcionalidad para ocultar y mostrar datos
     public void hideView(View view) {
         ToggleButton toggleButton = (ToggleButton) view;
             if (toggleButton.isChecked()) {
@@ -266,6 +268,7 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
             }
     }
 
+    //Interactua con las opciones del Navigation Bar
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
@@ -315,16 +318,18 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
         return true;
     }
 
+    //Cierra sesión
     public void signOut(){
         AuthUI.getInstance().signOut(this).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-                Toast.makeText(TrackingView.this, "CERRASTE SESION OK", Toast.LENGTH_SHORT).show();
+                Toast.makeText(TrackingView.this, "Sign out Successfully", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
     }
 
+    //Creacion de opciones del Menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -332,11 +337,12 @@ public class TrackingView extends AppCompatActivity implements ITrackingView, Vi
         return true;
     }
 
+    //Manejo de opciones del Menu
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.ajustes:
-                Toast.makeText(this, "aJUSTES", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Settings Menu", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.acerca:
                 showAbout();

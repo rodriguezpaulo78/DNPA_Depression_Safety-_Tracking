@@ -17,7 +17,6 @@ public class AudioToFirebase {
 
     private String filePath;
     //Firebase objects
-    private DatabaseReference mDatabase;
     private StorageReference mStorageRef;
     StorageReference mountainsRef;
     private StorageTask mStorageTask;
@@ -29,6 +28,7 @@ public class AudioToFirebase {
         mountainsRef = mStorageRef.child(filePath+".pcm");
     }
 
+    //Guardar audio en ruta predefinida
     public void saveToFirebase(String user, int index){
         String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(new Date());
         Uri file2 = Uri.fromFile(new File(filePath+".wav"));

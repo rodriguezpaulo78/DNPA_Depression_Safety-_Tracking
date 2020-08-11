@@ -39,6 +39,7 @@ public class OrientationEventListener implements SensorEventListener {
         filter=new FilteringData();
     }
 
+    //Manejo de lectura de datos del Sensor
     @Override
     public void onSensorChanged(SensorEvent event) {
         float[] rotationMatrix;
@@ -123,6 +124,7 @@ public class OrientationEventListener implements SensorEventListener {
         }
     }
 
+    //Escribe los datos en la interfaz principal y en Firebase
     @SuppressLint("LongLogTag")
     private void writeData(){
         Log.d(TAG, "Valores = (" + ZValue + ", " + XValue + ", " +YValue +")");
@@ -137,6 +139,7 @@ public class OrientationEventListener implements SensorEventListener {
         presenter.showData(XValue,YValue,ZValue,orientation);
     }
 
+    //Método para saber si la pantalla está hacia arriba
     private void onFaceUp() {
         if (!isFaceUp) {
             orientation=("Face up");
@@ -144,6 +147,7 @@ public class OrientationEventListener implements SensorEventListener {
         }
     }
 
+    //Método para saber si la pantalla está hacia abajo
     private void onFaceDown() {
         if (isFaceUp) {
             orientation=("Face down");

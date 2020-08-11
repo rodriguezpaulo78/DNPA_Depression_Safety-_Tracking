@@ -30,6 +30,7 @@ public class LocationToFirebase {
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
+    //Guarda los datos de ubicación obtenidos en Firebase
     public void saveToFirebase(final Context context, final GoogleMap mMap){
         //Direeccionar a la bd, cada vez que cambien los valores poner puntos en el mapa
         mDatabase.child(user.substring(0,index)).addValueEventListener(new ValueEventListener() {

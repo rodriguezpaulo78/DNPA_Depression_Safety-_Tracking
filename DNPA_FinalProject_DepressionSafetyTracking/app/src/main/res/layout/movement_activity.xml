@@ -51,7 +51,7 @@
         android:layout_marginStart="20dp"
         android:layout_gravity="left"
         android:layout_marginTop="40dp"
-        android:text="Movement Tracking PLOT"
+        android:text="Movement Tracking Recording"
         android:textSize="16sp" />
 
     <com.androidplot.xy.XYPlot
@@ -73,7 +73,7 @@
         android:checked="false"
         android:background="#FFC107"
         android:layout_alignParentBottom="true"
-        android:textOn="Detener Movement Tracking"
+        android:textOn="Stop Movement Tracking"
         android:textOff="Start Movement Tracking"
         android:onClick="onReadAccelerationDataToggleButtonClicked" />
 

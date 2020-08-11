@@ -30,9 +30,9 @@ public class LoginActivity extends AppCompatActivity {
 
     public static final String TAG="LOGIN";
     //VIEW
-    EditText Email, Password;
-    CheckBox seePass;
-    Button LogInButton, RegisterButton, forgotButton;
+    EditText edtEmail, edtPassword;
+    CheckBox showPass;
+    Button logInButton, registerButton, forgotButton;
     String email, password;
     ProgressDialog dialog;
 
@@ -53,12 +53,12 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login_activity);
 
         //VIEW
-        LogInButton = (Button) findViewById(R.id.buttonLogin);
-        RegisterButton = (Button) findViewById(R.id.buttonRegister);
+        logInButton = (Button) findViewById(R.id.buttonLogin);
+        registerButton = (Button) findViewById(R.id.buttonRegister);
         forgotButton = (Button) findViewById(R.id.forgotPass);
-        Email = (EditText) findViewById(R.id.editEmail);
-        Password = (EditText) findViewById(R.id.editPassword);
-        seePass = (CheckBox) findViewById(R.id.seePassword);
+        edtEmail = (EditText) findViewById(R.id.editEmail);
+        edtPassword = (EditText) findViewById(R.id.editPassword);
+        showPass = (CheckBox) findViewById(R.id.seePassword);
         dialog = new ProgressDialog(this);
 
         //FIREBASE
@@ -71,9 +71,9 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent = new Intent(LoginActivity.this, TrackingView.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-                    //Toast.makeText(LoginActivity.this, "INICIASTE SESION OK", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LoginActivity.this, "Sign In Successfully", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(LoginActivity.this, "FALLO INICIO SESION", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Sign in Error", Toast.LENGTH_SHORT).show();
                     Log.d(TAG,"AuthStateChanged:Logout");
                 }
 
@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         };
 
         //Click Listener to Login
-        LogInButton.setOnClickListener(new View.OnClickListener() {
+        logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 userSign();
@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         // Adding click listener to register button.
-        RegisterButton.setOnClickListener(new View.OnClickListener() {
+        registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Opening new user registration activity using intent on button click.
@@ -102,14 +102,14 @@ public class LoginActivity extends AppCompatActivity {
         forgotButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!Email.getText().toString().isEmpty()){
+                if(!edtEmail.getText().toString().isEmpty()){
                     new AlertDialog.Builder(LoginActivity.this)
                             .setTitle("Confirmación de Cambio")
                             .setMessage("Esta seguro de que desea cambiar su contraseña?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    FirebaseAuth.getInstance().sendPasswordResetEmail(Email.getText().toString())
+                                    FirebaseAuth.getInstance().sendPasswordResetEmail(edtEmail.getText().toString())
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
@@ -117,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                                                         Log.d(TAG, "Email sent.");
                                                         Toast.makeText(LoginActivity.this, "Email enviado, revise su bandeja", Toast.LENGTH_SHORT).show();
                                                     }else{
-                                                        Toast.makeText(LoginActivity.this, "Verifique el correo Electronico", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(LoginActivity.this, "Verify your Email", Toast.LENGTH_SHORT).show();
                                                     }
                                                 }
                                             });
@@ -130,45 +130,45 @@ public class LoginActivity extends AppCompatActivity {
                             })
                             .show();
                 }else{
-                    Toast.makeText(LoginActivity.this, "Ingrese el correo electroncio de la cuenta", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Enter the Email account", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
         //Control de EditText
-        Email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        edtEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(Email.getText().toString().isEmpty()){
+                if(edtEmail.getText().toString().isEmpty()){
                     if(hasFocus){
-                        Email.setHint("");
+                        edtEmail.setHint("");
                     }else{
-                        Email.setHint("Correo Electronico");
+                        edtEmail.setHint("Correo Electronico");
                     }
                 }
             }
         });
 
-        Password.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        edtPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(Password.getText().toString().isEmpty()){
+                if(edtPassword.getText().toString().isEmpty()){
                     if(hasFocus){
-                        Password.setHint("");
+                        edtPassword.setHint("");
                     }else{
-                        Password.setHint("Enter Password");
+                        edtPassword.setHint("Enter Password");
                     }
                 }
             }
         });
 
-        seePass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        showPass.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(!isChecked){
-                    Password.setTransformationMethod(new PasswordTransformationMethod());
+                    edtPassword.setTransformationMethod(new PasswordTransformationMethod());
                 } else{
-                    Password.setTransformationMethod(null);
+                    edtPassword.setTransformationMethod(null);
                 }
             }
         });
@@ -204,8 +204,8 @@ public class LoginActivity extends AppCompatActivity {
 
     //Metodo par iniciar sesion via FIREBASE
     private void userSign() {
-        email = Email.getText().toString().trim();
-        password = Password.getText().toString().trim();
+        email = edtEmail.getText().toString().trim();
+        password = edtPassword.getText().toString().trim();
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(LoginActivity.this, "Enter the correct Email", Toast.LENGTH_SHORT).show();
             return;
@@ -213,7 +213,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "Enter the correct password", Toast.LENGTH_SHORT).show();
             return;
         }
-        signFirebase = new FirebaseAuthentication(this, mAuth, Email, Password);
+        signFirebase = new FirebaseAuthentication(this, mAuth, edtEmail, edtPassword);
         signFirebase.signIn();
     }
 

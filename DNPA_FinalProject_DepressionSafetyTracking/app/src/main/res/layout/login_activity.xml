@@ -44,7 +44,7 @@
             android:inputType="textEmailAddress"
             android:textColor="#000"
             android:ems="10"
-            android:hint="Correo Electronico"
+            android:hint="Enter Email"
             android:textColorHint="#FFCDCACA"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
@@ -70,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/seePassword"
-            android:text="Mostrar Contraseña"
+            android:text="Show Password"
             android:buttonTint="@color/colorBlack"
             android:textColor="@color/colorBlack"/>
 
@@ -88,7 +88,7 @@
             android:id="@+id/buttonLogin"
             android:layout_marginTop="5dp"
             android:background="@color/colorBlack"
-            android:text="LOG IN "/>
+            android:text="SIGN IN "/>
 
         <Button
             android:id="@+id/buttonRegister"

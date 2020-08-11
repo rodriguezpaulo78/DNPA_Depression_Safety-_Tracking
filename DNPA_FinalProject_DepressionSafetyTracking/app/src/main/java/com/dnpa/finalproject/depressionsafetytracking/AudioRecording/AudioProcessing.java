@@ -42,6 +42,7 @@ public class AudioProcessing {
         audioSaver = new AudioToFirebase(filePath);
     }
 
+    //Iniciar grabación de audio
     public void startRecording(){
         Log.d(TAG, "Starting Recording");
         if( bufferSize == AudioRecord.ERROR_BAD_VALUE)
@@ -63,6 +64,7 @@ public class AudioProcessing {
         recordingThread.start();
     }
 
+    //Guardar grabación de audio en Almacenamiento Interno
     public void writeAudioDataToFile() {
         //Write the output audio in bytes
         byte saudioBuffer[] = new byte[bufferSize];
@@ -92,6 +94,7 @@ public class AudioProcessing {
         }
     }
 
+    //Detener grabación de audio
     public void stopRecording() throws IOException {
         Log.d(TAG, "Stopping Recording");
         if (null != recorder) {
@@ -103,6 +106,7 @@ public class AudioProcessing {
         }
     }
 
+    //Reproducir grabación de audio
     public void playingRecording() throws IOException{
         // We keep temporarily filePath globally as we have only two sample sounds now..
         if (filePath==null)
@@ -136,6 +140,7 @@ public class AudioProcessing {
         }
     }
 
+    //Guardar grabación de audio
     public void savingRecording() throws IOException{
         File f1 = new File(filePath+".pcm"); // The location of your PCM file
         File f2 = new File(filePath+".wav"); // The location where you want your WAV file

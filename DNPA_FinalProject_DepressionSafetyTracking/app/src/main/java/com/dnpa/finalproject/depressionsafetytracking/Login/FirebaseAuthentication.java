@@ -24,21 +24,18 @@ public class FirebaseAuthentication {
     EditText Email,Password;
     FirebaseAuth mAuth;
     ProgressDialog dialog;
-    FirebaseAuth.AuthStateListener mAuthListner;
     String email, password;
-    //GOOGLE
-    private GoogleSignInClient mGoogleSignInClient;
-    private final static int RC_SIGN_IN = 123;
 
-    public FirebaseAuthentication(Context c, FirebaseAuth auth, EditText email, EditText password){
-        context = c;
+    public FirebaseAuthentication(Context context, FirebaseAuth auth, EditText email, EditText password){
+        this.context = context;
         Email=email;
         Password=password;
         mAuth = auth;
-        dialog = new ProgressDialog(c);
+        dialog = new ProgressDialog(this.context);
 
     }
 
+    //Método de Inicio de Sesión
     public void signIn(){
         email = Email.getText().toString().trim();
         password = Password.getText().toString().trim();
