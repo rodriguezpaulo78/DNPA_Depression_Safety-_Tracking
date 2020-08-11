@@ -18,6 +18,7 @@ Los sensores utilizados en este proyecto fueron:
 4) Lectura de Datos: Micrófono
 
 Referencias de análisis y tratamiento de datos: 
-[1] S. Warea, C. Yue, R. Morillo, J. ChaoShang, J. Bi, J. Kamath, A. Russell, A. Bamis, B. Wang, "Predicting depressive symptoms using smartphone data" (2020) DOI: https://doi.org/10.1016/j.smhl.2019.100093
-[2] L. Canzian, M. Musolesi. "Trajectories of depression: unobtrusive monitoring of depressive states by means of smartphone mobility traces analysis"). Association for Computing Machinery, New York, NY, USA, 1293–1304. (2015) DOI: https://doi.org/10.1145/2750858.2805845
+
+- S. Warea, C. Yue, R. Morillo, J. ChaoShang, J. Bi, J. Kamath, A. Russell, A. Bamis, B. Wang, "Predicting depressive symptoms using smartphone data" (2020) DOI: https://doi.org/10.1016/j.smhl.2019.100093
+- L. Canzian, M. Musolesi. "Trajectories of depression: unobtrusive monitoring of depressive states by means of smartphone mobility traces analysis"). Association for Computing Machinery, New York, NY, USA, 1293–1304. (2015) DOI: https://doi.org/10.1145/2750858.2805845
 
