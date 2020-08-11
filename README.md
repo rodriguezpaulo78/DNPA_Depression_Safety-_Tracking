@@ -17,6 +17,8 @@ Los sensores utilizados en este proyecto fueron:
 3) Detección de Movimiento: Acelerómetro 
 4) Lectura de Datos: Micrófono
 
+Video Explicativo: https://drive.google.com/file/d/1mLd-FBekGRYEouFk6ZsznyMC6UTEatc2/view?usp=sharing
+
 Referencias de análisis y tratamiento de datos: 
 
 - S. Warea, C. Yue, R. Morillo, J. ChaoShang, J. Bi, J. Kamath, A. Russell, A. Bamis, B. Wang, "Predicting depressive symptoms using smartphone data" (2020) DOI: https://doi.org/10.1016/j.smhl.2019.100093
